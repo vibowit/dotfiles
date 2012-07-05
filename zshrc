@@ -1,4 +1,12 @@
-export PATH="$PATH:$HOME/bin"
+# Nie mogę zapamiętać nazw programów to sobie wypiszę
+# wgetpaste - wrzucanie do pastebin
+# scrot - zrzut ekranu do pliku png
+# feh - przeglądarka do zdjęć
+# wicd-client - ustawienia połączeń wifi
+# ompload - upload zdjęć itp. (coś ala imageshack)
+# Xephyr - do testowania configa awesome 
+# $ Xephyr :1 -ac -br -noreset -screen 1152x720 &
+# $ DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua.new
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -28,7 +36,7 @@ ZSH_THEME="candy"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git ruby)
 
 source $ZSH/oh-my-zsh.sh
 # customize compinit
@@ -42,7 +50,7 @@ HISTSIZE='10000'
 SAVEHIST="${HISTSIZE}"
 
 
-# automatyczne poprawianie polecec
+# automatyczne poprawianie polecen
 setopt correctall
 
 # extended globbing, awesome!
@@ -54,6 +62,9 @@ autoload -U zmv
 
 # zargs, as an alternative to find -exec and xargs.
 autoload -U zargs
+
+# nice zsh functions
+autoload -U is-at-least
 
 # Turn on command substitution in the prompt (and parameter expansion and arithmetic expansion).
 setopt promptsubst
@@ -87,14 +98,29 @@ alias ohmyzsh="emacsclient ~/.oh-my-zsh"
 
 alias sasprd="ssh bwitkows@sas_srv"
 alias sastst="ssh bwitkows@sastst"
+alias bull="ssh vibowit@bull"
 
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias ls='ls --color=auto --human-readable --group-directories-first --classify'
 
+# alias dir='ls -l'
+# alias ll='ls -l'
+# alias la='ls -la'
+# alias l='ls -alF'
+# alias d='ls -l -L'
+
+# alias rm='rm -i'
+
+# alias cp='nocorrect cp'
+# alias mv='nocorrect mv'
+# alias mkdir='nocorrect mkdir'
+
 alias vi="emacsclient -c"
 alias e="emacsclient -c"
 alias ed="emacsclient -t"
+alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
+alias T="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
 
 alias -g H='| head'
 alias -g T='| tail'
@@ -138,26 +164,25 @@ bindkey "^S" history-incremental-pattern-search-forward
 
 # if XWin is not running start it
 
-ISX=`ps -ef | grep -i XWin | wc -l`
-if [[ $ISX -eq "0" ]]; then
-    startx
-    echo "Uruchamiam X server..."
-else
-    echo "X server is running..."
-fi 
+# ISX=`ps -ef | grep -i XWin | wc -l`
+# if [[ $ISX -eq "0" ]]; then
+#     startx
+#     echo "Uruchamiam X server..."
+# else
+#     echo "X server is running..."
+# fi 
 
-# set DISPLAY
-if [ -z "$DISPLAY" ] ; then
-    export DISPLAY="`hostname`:0.0"
-fi
-echo Display:$DISPLAY
+# # set DISPLAY
+# if [ -z "$DISPLAY" ] ; then
+#     export DISPLAY="`hostname`:0.0"
+# fi
+# echo Display:$DISPLAY
 
 
 # inne przydatne aliasy
 function sasprdedit() {
     /usr/bin/emacsclient -c "/bwitkows@sas_srv:$1"
 }
-# alias sasprdedit=sasprd_emacs
 
 function myarg() {
   [[ $#@ -eq 2 ]] || { 
@@ -177,3 +202,8 @@ function myarg() {
   #   echo Some error occured; return 1
   # fi
 }
+
+# Customize to your needs...
+export EDITOR=emacsclient
+export VISUAL=emacsclient
+export PATH=${PATH}:${HOME}/bin
