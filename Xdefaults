@@ -1,0 +1,12 @@
+!emacs*background:    #010101
+!emacs*foreground:    #d3d7cf
+emacs*pointerColor:  gray75
+emacs*borderColor:   gray75
+emacs*cursorColor:   cyan
+emacs*bitmapIcon:    on
+emacs*visualBell:    on
+emacs.FontBackend:   xft
+!emacs*font:          Bitstream Vera Sans Mono-11
+emacs*font:   	      DejaVu Sans Mono-11
+!emacs*font: 	     xft:Bitstream Vera Sans Mono:size=12
+

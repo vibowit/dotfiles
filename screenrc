@@ -1,0 +1,13 @@
+defscrollback 5000
+altscreen on
+term screen-256color
+terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo xterm* ti@:te@
+hardstatus off
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
+startup_message off
+screen -t local 1
+screen -t "SAS prd" 2 ssh bwitkows@sas_srv
+screen -t "SAS tst" 3 ssh bwitkows@sastst
+# screen -t "Chat" 4 ssh vibowit@vibowit@homeip.net 
