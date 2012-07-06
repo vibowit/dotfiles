@@ -1,3 +1,5 @@
+# -*- mode: Shell-script; -*-
+
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
 # scrot - zrzut ekranu do pliku png
@@ -8,6 +10,11 @@
 # $ Xephyr :1 -ac -br -noreset -screen 1152x720 &
 # $ DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua.new
 
+# First things first...
+export EDITOR=emacsclient
+export VISUAL=emacsclient
+export PATH=${PATH}:${HOME}/bin
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -16,7 +23,6 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="candy"
-
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -31,30 +37,27 @@ ZSH_THEME="candy"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git ruby)
-
 source $ZSH/oh-my-zsh.sh
+
 # customize compinit
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
-
 
 # Customize to your needs...
 HISTFILE="${HOME}/.zsh_history"
 HISTSIZE='10000'
 SAVEHIST="${HISTSIZE}"
 
-
 # automatyczne poprawianie polecen
 setopt correctall
 
 # extended globbing, awesome!
-setopt extendedGlob
 setopt extended_glob
 
 # zmv -  a command for renaming files by means of shell patterns.
@@ -94,7 +97,7 @@ setopt emacs
 
 # Aliases
 alias zshconfig="emacsclient -c ~/.zshrc"
-alias ohmyzsh="emacsclient ~/.oh-my-zsh"
+alias ohmyzsh="emacsclient -c ~/.oh-my-zsh"
 
 alias sasprd="ssh bwitkows@sas_srv"
 alias sastst="ssh bwitkows@sastst"
@@ -103,14 +106,6 @@ alias bull="ssh vibowit@bull"
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias ls='ls --color=auto --human-readable --group-directories-first --classify'
-
-# alias dir='ls -l'
-# alias ll='ls -l'
-# alias la='ls -la'
-# alias l='ls -alF'
-# alias d='ls -l -L'
-
-# alias rm='rm -i'
 
 # alias cp='nocorrect cp'
 # alias mv='nocorrect mv'
@@ -161,30 +156,26 @@ alias -s txt="cat"
 bindkey "^R" history-incremental-pattern-search-backward 
 bindkey "^S" history-incremental-pattern-search-forward
 
-
 # if XWin is not running start it
+ISX=`ps -ef | grep -i XWin | wc -l`
+if [[ $ISX -eq "0" ]]; then
+    startx
+    echo "Start XWin..."
+fi 
 
-# ISX=`ps -ef | grep -i XWin | wc -l`
-# if [[ $ISX -eq "0" ]]; then
-#     startx
-#     echo "Uruchamiam X server..."
-# else
-#     echo "X server is running..."
-# fi 
+# set $DISPLAY
+if [ -z "$DISPLAY" ] ; then
+    export DISPLAY="`hostname`:0.0"
+    echo Display:$DISPLAY
+fi
 
-# # set DISPLAY
-# if [ -z "$DISPLAY" ] ; then
-#     export DISPLAY="`hostname`:0.0"
-# fi
-# echo Display:$DISPLAY
-
-
-# inne przydatne aliasy
-function sasprdedit() {
+# Some SAS tools
+# someday this part will have separate file
+sas_prdEdit() {
     /usr/bin/emacsclient -c "/bwitkows@sas_srv:$1"
 }
 
-function myarg() {
+sas_findLog() {
   [[ $#@ -eq 2 ]] || { 
       echo "$0 : Give exactly two arguments:"
       echo "    NAME - part of flow name"
@@ -192,18 +183,5 @@ function myarg() {
       return 1 
   }
   command ssh bwitkows@sas_srv "find / -name \"*$1*.log\" -atime $2 2>/dev/null"
-  # test -e "$1" || { echo No such file or directory: "$1" ; return 1 }
-  # local newname=$1
-  # if vared -c -p 'rename to: ' newname &&
-  #   [[ -n $newname && $newname != $1 ]]
-  # then
-  #   command mv -i -- $1 $newname
-  # else
-  #   echo Some error occured; return 1
-  # fi
 }
 
-# Customize to your needs...
-export EDITOR=emacsclient
-export VISUAL=emacsclient
-export PATH=${PATH}:${HOME}/bin
