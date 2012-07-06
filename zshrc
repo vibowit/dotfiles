@@ -10,11 +10,6 @@
 # $ Xephyr :1 -ac -br -noreset -screen 1152x720 &
 # $ DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua.new
 
-# First things first...
-export EDITOR=emacsclient
-export VISUAL=emacsclient
-export PATH=${PATH}:${HOME}/bin
-
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
