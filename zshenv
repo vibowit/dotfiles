@@ -9,5 +9,6 @@ typeset -U path
 
 path=(~/bin $path)
 
-
+[[ $fpath = *vibo* ]] || fpath=(~vibo/bin/fns $fpath)
+autoload -U ${fpath[1]}/*(:t)
 
