@@ -40,9 +40,8 @@
 ;; cost me anything on OSX.
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-
 (show-paren-mode t)
-
+(defalias 'list-buffers 'ibuffer)
 
 ;; browser
 (when linux
@@ -51,6 +50,15 @@
 
 (when win32
   (setq browse-url-browser-function 'browse-url-default-windows-browser))
+
+;; backup
+;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
+(custom-set-variables
+  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+  '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
+
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs.d/autosaves/" t)
 
 ;; -----------------------------------------------------------------------
 ;; Personal Keybindings
@@ -87,43 +95,70 @@
 (global-set-key [C-M-right] 'next-buffer)
 (global-set-key [C-M-left]  'previous-buffer)
 
-;; Setup hippie-expand (we're going to have to make an eval-after-load
-;; section later)
-(defun hippie-expand-case-sensitive (arg)
-  "Do case sensitive searching so we deal with gtk_xxx and GTK_YYY."
+
+;; -----------------------------------------------------------------------
+;; Yasnippets and hippie expand with smart-tab
+;; -----------------------------------------------------------------------
+
+;; tab expansion with hippie and yas
+(setq hippie-expand-try-functions-list
+      '(yas/hippie-try-expand
+        try-complete-file-name-partially
+        try-expand-all-abbrevs
+        try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol))
+
+(add-to-list 'load-path
+              "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(setq hippie-expand-verbose t)
+(yas/global-mode 1)
+
+(defvar smart-tab-using-hippie-expand t
+  "turn this on if you want to use hippie-expand completion.")
+
+(defun smart-tab (prefix)
+  "Needs `transient-mark-mode' to be on. This smart tab is
+  minibuffer compliant: it acts as usual in the minibuffer.
+
+  In all other buffers: if PREFIX is \\[universal-argument], calls
+  `smart-indent'. Else if point is at the end of a symbol,
+  expands it. Else calls `smart-indent'."
   (interactive "P")
-  (let ((case-fold-search nil))
-    (hippie-expand arg)))
+  (labels ((smart-tab-must-expand (&optional prefix)
+                                  (unless (or (consp prefix)
+                                              mark-active)
+                                    (looking-at "\\_>"))))
+    (cond ((minibufferp)
+           (minibuffer-complete))
+          ((smart-tab-must-expand prefix)
+           (if smart-tab-using-hippie-expand
+               (hippie-expand prefix)
+             (dabbrev-expand prefix)))
+          ((smart-indent)))))
 
-(global-set-key "\M-/" 'hippie-expand-case-sensitive)
-(global-set-key (kbd "M-SPC") 'hippie-expand-case-sensitive)
-
-;; (setq hippie-expand-try-functions-list
-;;       '(try-expand-dabbrev
-;;         try-complete-file-name-partially
-;;         try-complete-file-name
-;;         try-expand-all-abbrevs
-;;         try-expand-list
-;;         try-expand-dabbrev-all-buffers
-;;         try-expand-dabbrev-from-kill))
-
-;; smart tab
-(global-set-key [(tab)] 'smart-tab)
-(defun smart-tab ()
-  "This smart tab is minibuffer compliant: it acts as usual in
-    the minibuffer. Else, if mark is active, indents region. Else if
-    point is at the end of a symbol, expands it. Else indents the
-    current line."
+(defun smart-indent ()
+  "Indents region if mark is active, or current line otherwise."
   (interactive)
-  (if (minibufferp)
-      (unless (minibuffer-complete)
-        (dabbrev-expand nil))
-    (if mark-active
-        (indent-region (region-beginning)
-                       (region-end))
-      (if (looking-at "\\_>")
-          (dabbrev-expand nil)
-        (indent-for-tab-command)))))
+  (if mark-active
+    (indent-region (region-beginning)
+                   (region-end))
+    (indent-for-tab-command)))
+
+;; Bind tab everywhere
+(global-set-key (kbd "TAB") 'smart-tab)
+
+;; Enables tab completion in the `eval-expression` minibuffer
+(define-key read-expression-map [(tab)] 'hippie-expand)
+(define-key read-expression-map [(shift tab)] 'unexpand)
+
+;; Replace yasnippets's TAB
+(add-hook 'yas/minor-mode-hook
+          (lambda () (define-key yas/minor-mode-map
+                       (kbd "TAB") 'smart-tab))) ; was yas/expand
 
 ;; change behaviour of beggining of line
 (defun smart-beginning-of-line()
@@ -262,6 +297,11 @@ If point was already at that position, move point to beginning of line."
 (setq org-refile-target-verify-function 'bh/verify-refile-target)
 
 
+;; diary as appointments
+(setq org-agenda-include-diary nil)
+(setq org-agenda-diary-file "~/git/org/diary.org")
+
+
 ;; Agenda views
 ;; Dim blocked tasks
 (setq org-agenda-dim-blocked-tasks t)
@@ -366,7 +406,7 @@ If point was already at that position, move point to beginning of line."
 ;; Separate drawers for clocking and logs
 (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
 ;; Save clock data and state changes and notes in the LOGBOOK drawer
-(setq org-clock-into-drawer t)
+;(setq org-clock-into-drawer t)
 
 ;; Remove empty LOGBOOK drawers on clock out
 (defun bh/remove-empty-drawer-on-clock-out ()
@@ -375,7 +415,10 @@ If point was already at that position, move point to beginning of line."
     (beginning-of-line 0)
     (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
-(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+;(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+
+;(setq org-log-done (quote time))
+(setq org-log-into-drawer "LOGBOOK")
 
 (setq org-agenda-span 'day)
 (setq org-stuck-projects '("" nil nil ""))
@@ -708,6 +751,7 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 ; (load "~/.emacs.d/sas_utils")
 
 ;; set theme
+; (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/plugins")
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
