@@ -89,6 +89,9 @@ setopt pushd_ignore_dups
 
 # Bindkeys
 setopt emacs
+# do naprawy home i end w zsh i urxvt (mam problem w cygwin)
+bindkey "^[[7~" beginning-of-line
+bindkey "^[[8~" end-of-line
 
 # Aliases
 alias zshconfig="emacsclient -c ~/.zshrc"
@@ -152,17 +155,17 @@ bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 
 # if XWin is not running start it
-ISX=`ps -ef | grep -i XWin | wc -l`
-if [[ $ISX -eq "0" ]]; then
-    startx
-    echo "Start XWin..."
-fi 
+# ISX=`ps -ef | grep -i XWin | wc -l`
+# if [[ $ISX -eq "0" ]]; then
+#     startx
+#     echo "Start XWin..."
+# fi 
 
-# set $DISPLAY
-if [ -z "$DISPLAY" ] ; then
-    export DISPLAY="`hostname`:0.0"
-    echo Display:$DISPLAY
-fi
+# # set $DISPLAY
+# if [ -z "$DISPLAY" ] ; then
+#     export DISPLAY="`hostname`:0.0"
+#     echo Display:$DISPLAY
+# fi
 
 # Some SAS tools
 # someday this part will have separate file

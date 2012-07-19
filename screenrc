@@ -7,7 +7,11 @@ hardstatus off
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
 startup_message off
-screen -t local 1
-screen -t "SAS prd" 2 ssh bwitkows@sas_srv
+# shell -/bin/zsh
+# shelltitle '$ |zsh'
+
 screen -t "SAS tst" 3 ssh bwitkows@sastst
+screen -t "SAS prd" 2 ssh bwitkows@sas_srv
+screen -t local 1
+
 # screen -t "Chat" 4 ssh vibowit@vibowit@homeip.net 

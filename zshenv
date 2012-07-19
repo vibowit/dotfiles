@@ -9,6 +9,7 @@ typeset -U path
 
 path=(~/bin $path)
 
-[[ $fpath = *vibo* ]] || fpath=(~vibo/bin/fns $fpath)
-autoload -U ${fpath[1]}/*(:t)
-
+(id vibo > /dev/null 2>&1) && (
+    [[ $fpath = *vibo* ]] || fpath=(~vibo/bin/fns $fpath)
+    autoload -U ${fpath[1]}/*(:t)
+)

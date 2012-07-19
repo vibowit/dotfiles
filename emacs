@@ -42,6 +42,7 @@
 
 (show-paren-mode t)
 (defalias 'list-buffers 'ibuffer)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; browser
 (when linux
@@ -429,23 +430,23 @@ If point was already at that position, move point to beginning of line."
 (setq org-tag-alist (quote ((:startgroup)
                             ("@errand" . ?e)
                             ("@office" . ?o)
-                            ("@home" . ?H)
+                            ("@home" . ?h)
                             ;("@farm" . ?f)
                             (:endgroup)
-                            ("PHONE" . ?p)
-                            ("WAITING" . ?w)
-                            ("HOLD" . ?h)
-                            ("PERSONAL" . ?P)
-                            ("WORK" . ?W)
+                            ("PHONE" . ?t)
+                            ("WAITING" . ?W)
+                            ("HOLD" . ?H)
+                            ("PERSONAL" . ?p)
+                            ("WORK" . ?w)
                             ;("FARM" . ?F)
                             ;("ORG" . ?O)
                             ;("NORANG" . ?N)
-			    ("PEKAO" . ?b)
+			    ("PEKAO" . ?P)
                             ;("crypt" . ?E)
                             ;("MARK" . ?M)
                             ("NOTE" . ?n)
                             ;("BZFLAG" . ?B)
-                            ("CANCELLED" . ?c)
+                            ("CANCELLED" . ?C)
                             ("FLAGGED" . ??))))
 
 ; Allow setting single tags without the menu
@@ -751,7 +752,7 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 ; (load "~/.emacs.d/sas_utils")
 
 ;; set theme
-; (add-to-list 'load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/plugins")
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
