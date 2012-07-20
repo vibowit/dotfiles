@@ -3,6 +3,15 @@
 ;;  vibowit's .emacs file
 ;; -----------------------------------------------------------------------
 
+;; add plugins subdirs to load-path
+(let ((default-directory "~/.emacs.d/plugins/"))
+      (setq load-path
+            (append
+             (let ((load-path (copy-sequence load-path))) ;; Shadow
+               (append
+                (copy-sequence (normal-top-level-add-to-load-path '(".")))
+                (normal-top-level-add-subdirs-to-load-path)))
+             load-path)))
 
 ;; -----------------------------------------------------------------------
 ;;  Systems
@@ -41,8 +50,22 @@
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (show-paren-mode t)
+
+
+(require 'ibuffer)
 (defalias 'list-buffers 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
+;;sort on major-mode
+(setq ibuffer-default-sorting-mode 'major-mode)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
+(setq visible-bell t)                 ;;blink instead of beep
+(setq inhibit-startup-message t)      ;;Don't show start up message/buffer
+(file-name-shadow-mode t)
+(global-font-lock-mode t)             ;;syntax highlighting on...
+(setq font-lock-maximum-decoration t) ;;...as much as possible
+; (setq frame-title-format '(buffer-file-name "%f" ("%b"))) ;;titlebar=buffer unless filename
+(setq-default indent-tabs-mode nil)   ;;use spaces instead of tabs
 
 ;; browser
 (when linux
@@ -60,6 +83,17 @@
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
+
+
+(setq initial-scratch-message
+      ";; scratch buffer created -- happy hacking\n")
+
+;;Emacs is a text editor, make sure your text files end in a newline
+(setq require-final-newline 'query)
+
+;;no extra whitespace after lines
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;;--------------------------------------------
 
 ;; -----------------------------------------------------------------------
 ;; Personal Keybindings
@@ -100,66 +134,69 @@
 ;; -----------------------------------------------------------------------
 ;; Yasnippets and hippie expand with smart-tab
 ;; -----------------------------------------------------------------------
+(require 'yasnippet)
+
+(setq hippie-expand-verbose t)
+(yas/global-mode 1)
 
 ;; tab expansion with hippie and yas
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand
-        try-complete-file-name-partially
         try-expand-all-abbrevs
         try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
         try-expand-dabbrev-from-kill
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
+        try-expand-dabbrev-all-buffers
+        try-complete-file-name-partially
+        try-complete-file-name
+        ;try-complete-lisp-symbol-partially
+        ;try-complete-lisp-symbol
+        ))
 
-(add-to-list 'load-path
-              "~/.emacs.d/plugins/yasnippet")
-(require 'yasnippet)
-(setq hippie-expand-verbose t)
-(yas/global-mode 1)
+(global-set-key (kbd "M-/") 'hippie-expand)
 
-(defvar smart-tab-using-hippie-expand t
-  "turn this on if you want to use hippie-expand completion.")
+;; (defvar smart-tab-using-hippie-expand t
+;;   "turn this on if you want to use hippie-expand completion.")
 
-(defun smart-tab (prefix)
-  "Needs `transient-mark-mode' to be on. This smart tab is
-  minibuffer compliant: it acts as usual in the minibuffer.
+;; (defun smart-tab (prefix)
+;;   "Needs `transient-mark-mode' to be on. This smart tab is
+;;   minibuffer compliant: it acts as usual in the minibuffer.
 
-  In all other buffers: if PREFIX is \\[universal-argument], calls
-  `smart-indent'. Else if point is at the end of a symbol,
-  expands it. Else calls `smart-indent'."
-  (interactive "P")
-  (labels ((smart-tab-must-expand (&optional prefix)
-                                  (unless (or (consp prefix)
-                                              mark-active)
-                                    (looking-at "\\_>"))))
-    (cond ((minibufferp)
-           (minibuffer-complete))
-          ((smart-tab-must-expand prefix)
-           (if smart-tab-using-hippie-expand
-               (hippie-expand prefix)
-             (dabbrev-expand prefix)))
-          ((smart-indent)))))
+;;   In all other buffers: if PREFIX is \\[universal-argument], calls
+;;   `smart-indent'. Else if point is at the end of a symbol,
+;;   expands it. Else calls `smart-indent'."
+;;   (interactive "P")
+;;   (labels ((smart-tab-must-expand (&optional prefix)
+;;                                   (unless (or (consp prefix)
+;;                                               mark-active)
+;;                                     (looking-at "\\_>"))))
+;;     (cond ((minibufferp)
+;;            (minibuffer-complete))
+;;           ((smart-tab-must-expand prefix)
+;;            (if smart-tab-using-hippie-expand
+;;                (hippie-expand prefix)
+;;              (dabbrev-expand prefix)))
+;;           ((smart-indent)))))
 
-(defun smart-indent ()
-  "Indents region if mark is active, or current line otherwise."
-  (interactive)
-  (if mark-active
-    (indent-region (region-beginning)
-                   (region-end))
-    (indent-for-tab-command)))
+;; (defun smart-indent ()
+;;   "Indents region if mark is active, or current line otherwise."
+;;   (interactive)
+;;   (if mark-active
+;;     (indent-region (region-beginning)
+;;                    (region-end))
+;;     (indent-for-tab-command)))
 
-;; Bind tab everywhere
-(global-set-key (kbd "TAB") 'smart-tab)
+;; Bind ctrl tab everywhere
+; (global-set-key (kbd "<C-tab>") 'smart-tab)
 
 ;; Enables tab completion in the `eval-expression` minibuffer
-(define-key read-expression-map [(tab)] 'hippie-expand)
-(define-key read-expression-map [(shift tab)] 'unexpand)
+;; (define-key read-expression-map [(control tab)] 'hippie-expand)
+;; (define-key read-expression-map [(shift tab)] 'unexpand)
 
 ;; Replace yasnippets's TAB
-(add-hook 'yas/minor-mode-hook
-          (lambda () (define-key yas/minor-mode-map
-                       (kbd "TAB") 'smart-tab))) ; was yas/expand
+; (add-hook 'yas/minor-mode-hook
+;          (lambda () (define-key yas/minor-mode-map
+;                       (kbd "TAB") 'smart-tab))) ; was yas/expand
+
 
 ;; change behaviour of beggining of line
 (defun smart-beginning-of-line()
@@ -176,11 +213,31 @@ If point was already at that position, move point to beginning of line."
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key "\C-a" 'smart-beginning-of-line)
 
-
 ;; -----------------------------------------------------------------------
 ;; Set up coding system.
 ;; -----------------------------------------------------------------------
 (prefer-coding-system 'utf-8)
+
+
+;;Awesome copy/paste!----------------------
+;;My most used hack! If nothing is marked/highlighted, and you copy or cut
+;;(C-w or M-w) then use column 1 to end. No need to "C-a C-k" or "C-a C-w" etc.
+(defadvice kill-ring-save (before slick-copy activate compile)
+  "When called interactively with no active region, copy a single line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (message "Copied line")
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+
+(defadvice kill-region (before slick-cut activate compile)
+  "When called interactively with no active region, kill a single line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (message "Killed line")
+     (list (line-beginning-position)
+            (line-beginning-position 2)))))
+;;--------------------------------------------
 
 
 ;; -----------------------------------------------------------------------
@@ -203,10 +260,11 @@ If point was already at that position, move point to beginning of line."
 ;; -----------------------------------------------------------------------
 ;; Org mode
 ;; -----------------------------------------------------------------------
-;; (require 'org)
-(add-to-list 'load-path (expand-file-name "~/git/org-mode/lisp"))
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
+;; new version or org-mode
 (require 'org-install)
+;; fajniejsza obsługa checkboxów
+(require 'org-checklist)
 
 (setq org-agenda-files (quote ("~/git/org")))
 (setq org-directory "~/git/org")
@@ -692,10 +750,11 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
 
-
-;; fajniejsza obsługa checkboxów
-(add-to-list 'load-path (expand-file-name "~/git/org-mode/contrib/lisp"))
-(require 'org-checklist)
+;; -----------------------------------------------------------------------
+;; magit mode
+;; -----------------------------------------------------------------------
+(require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; -----------------------------------------------------------------------
 ;; vbs mode
@@ -753,6 +812,6 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 
 ;; set theme
 (add-to-list 'load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/plugins")
+; (add-to-list 'load-path "~/.emacs.d/plugins")
 (require 'color-theme-zenburn)
 (color-theme-zenburn)

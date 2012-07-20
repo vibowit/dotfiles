@@ -114,6 +114,7 @@ alias e="emacsclient -c"
 alias ed="emacsclient -t"
 alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
 alias T="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
+alias killemacs="emacsclient -e '(kill-emacs)'"
 
 alias -g H='| head'
 alias -g T='| tail'
