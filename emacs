@@ -2,6 +2,7 @@
 ;; -----------------------------------------------------------------------
 ;;  vibowit's .emacs file
 ;; -----------------------------------------------------------------------
+;; Time-stamp: <2012-07-20 14:17:23 by bwitkowski>
 
 ;; add plugins subdirs to load-path
 (let ((default-directory "~/.emacs.d/plugins/"))
@@ -130,6 +131,16 @@
 (global-set-key [C-M-right] 'next-buffer)
 (global-set-key [C-M-left]  'previous-buffer)
 
+
+;;Time-stamp-----------------------------------
+
+;; when there is a "Time-stamp: <>" in the first 10 lines of the file,
+;; emacs will write time-stamp information there when saving the file.
+(setq time-stamp-active t          ; do enable time-stamps
+      time-stamp-line-limit 10     ; check first 10 buffer lines for Time-stamp: <>
+      time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S by %u") ; date format
+(add-hook 'write-file-hooks 'time-stamp) ; update when saving
+;;--------------------------------------------
 
 ;; -----------------------------------------------------------------------
 ;; Yasnippets and hippie expand with smart-tab

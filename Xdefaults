@@ -1,3 +1,6 @@
+! vibowit's .Xdefaults file
+! Time-stamp: <2012-07-20 14:23:05 by bwitkowski>
+
 !{{{ XFT
 Xft.dpi:       96
 Xft.antialias: 1
@@ -49,7 +52,7 @@ urxvt*.colorUL:    #ffffff
 ! Pseudo Transparency
 !urxvt*shading:    50
 !urxvt*transparent:true
-! 
+!
 ! Zenburn color-scheme
 urxvt*background:  #3f3f3f
 urxvt*foreground:  #dcdccc

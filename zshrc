@@ -1,4 +1,6 @@
 # -*- mode: Shell-script; -*-
+# vibowit's .zshrc file
+# Time-stamp: <2012-07-20 14:19:17 by bwitkowski>
 
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
@@ -6,7 +8,7 @@
 # feh - przeglądarka do zdjęć
 # wicd-client - ustawienia połączeń wifi
 # ompload - upload zdjęć itp. (coś ala imageshack)
-# Xephyr - do testowania configa awesome 
+# Xephyr - do testowania configa awesome
 # $ Xephyr :1 -ac -br -noreset -screen 1152x720 &
 # $ DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua.new
 
@@ -152,7 +154,7 @@ alias -s ace="unace l"
 alias -s txt="cat"
 
 # Keys
-bindkey "^R" history-incremental-pattern-search-backward 
+bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 
 # if XWin is not running start it
@@ -160,7 +162,7 @@ bindkey "^S" history-incremental-pattern-search-forward
 # if [[ $ISX -eq "0" ]]; then
 #     startx
 #     echo "Start XWin..."
-# fi 
+# fi
 
 # # set $DISPLAY
 # if [ -z "$DISPLAY" ] ; then
@@ -175,11 +177,11 @@ sas_prdEdit() {
 }
 
 sas_findLog() {
-  [[ $#@ -eq 2 ]] || { 
+  [[ $#@ -eq 2 ]] || {
       echo "$0 : Give exactly two arguments:"
       echo "    NAME - part of flow name"
       echo "    TIME - numer of days to look back"
-      return 1 
+      return 1
   }
   command ssh bwitkows@sas_srv "find / -name \"*$1*.log\" -atime $2 2>/dev/null"
 }
