@@ -2,7 +2,7 @@
 ;; -----------------------------------------------------------------------
 ;;  vibowit's .emacs file
 ;; -----------------------------------------------------------------------
-;; Time-stamp: <2012-07-20 14:17:23 by bwitkowski>
+;; Time-stamp: <2012-07-22 23:59:45 by vibo>
 
 ;; add plugins subdirs to load-path
 (let ((default-directory "~/.emacs.d/plugins/"))
@@ -223,6 +223,25 @@ If point was already at that position, move point to beginning of line."
 
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key "\C-a" 'smart-beginning-of-line)
+
+
+;; fixing the mark commands
+(defun push-mark-no-activate ()
+  "Pushes `point' to `mark-ring' and does not activate the region
+Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
+  (interactive)
+  (push-mark (point) t nil)
+  (message "Pushed mark to ring"))
+
+(defun jump-to-mark ()
+  "Jumps to the local mark, respecting the `mark-ring' order.
+This is the same as using \\[set-mark-command] with the prefix argument."
+  (interactive)
+  (set-mark-command 1))
+
+(global-set-key (kbd "C-`") 'push-mark-no-activate)
+(global-set-key (kbd "M-`") 'jump-to-mark)
+
 
 ;; -----------------------------------------------------------------------
 ;; Set up coding system.
