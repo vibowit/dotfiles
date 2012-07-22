@@ -1,6 +1,6 @@
 # -*- mode: Shell-script; -*-
 # vibowit's .zshrc file
-# Time-stamp: <2012-07-20 14:19:17 by bwitkowski>
+# Time-stamp: <2012-07-23 01:01:36 by vibo>
 
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
@@ -186,3 +186,6 @@ sas_findLog() {
   command ssh bwitkows@sas_srv "find / -name \"*$1*.log\" -atime $2 2>/dev/null"
 }
 
+# keychain
+keychain --quiet id_ecdsa
+source ~/.keychain/$HOST-sh
