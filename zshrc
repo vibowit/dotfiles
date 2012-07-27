@@ -1,6 +1,6 @@
 # -*- mode: Shell-script; -*-
 # vibowit's .zshrc file
-# Time-stamp: <2012-07-27 15:24:52 by bwitkowski>
+# Time-stamp: <2012-07-27 15:36:45 by bwitkowski>
 
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
@@ -95,7 +95,6 @@ setopt emacs
 bindkey "^[[7~" beginning-of-line
 bindkey "^[[8~" end-of-line
 
-
 # exports
 export EDITOR="emacsclient -t -n -a nano"
 
@@ -105,7 +104,10 @@ alias ohmyzsh="emacsclient -c ~/.oh-my-zsh"
 
 alias sasprd="ssh bwitkows@sas_srv"
 alias sastst="ssh bwitkows@sastst"
-alias bull="ssh vibowit@bull"
+# login to bull from intranet
+alias bullhome="ssh vibowit@bull screen -raAd -R"
+# login to bull from internet
+alias bullaway="urxvtc -e ssh -t vibowit@vibowit.homeip.net screen -raAd -R"
 
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'

@@ -1,5 +1,5 @@
 # vibowit's .screenrc file
-# Time-stamp: <2012-07-27 12:18:49 by bwitkowski>
+# Time-stamp: <2012-07-27 15:53:05 by bwitkowski>
 
 shell /usr/bin/zsh
 
@@ -28,7 +28,7 @@ screen -t "SAS prd" 1 ssh bwitkows@sas_srv
 select 1
 
 # use backtick for prefix key instead of ctrl-a
-escape ``
+escape `e
 
 # use regular audible bell
 vbell off
