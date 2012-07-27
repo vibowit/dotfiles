@@ -1,6 +1,6 @@
 # -*- mode: Shell-script; -*-
 # vibowit's .zshrc file
-# Time-stamp: <2012-07-23 01:01:36 by vibo>
+# Time-stamp: <2012-07-27 15:24:52 by bwitkowski>
 
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
@@ -81,7 +81,7 @@ setopt hist_ignore_space
 setopt noflowcontrol
 
 # Other options
-setopt autocd
+setopt auto_cd
 
 unsetopt beep
 
@@ -95,6 +95,10 @@ setopt emacs
 bindkey "^[[7~" beginning-of-line
 bindkey "^[[8~" end-of-line
 
+
+# exports
+export EDITOR="emacsclient -t -n -a nano"
+
 # Aliases
 alias zshconfig="emacsclient -c ~/.zshrc"
 alias ohmyzsh="emacsclient -c ~/.oh-my-zsh"
@@ -107,16 +111,16 @@ alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias ls='ls --color=auto --human-readable --group-directories-first --classify'
 
-# alias cp='nocorrect cp'
-# alias mv='nocorrect mv'
-# alias mkdir='nocorrect mkdir'
-
 alias vi="emacsclient -c"
-alias e="emacsclient -c"
-alias ed="emacsclient -t"
-alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
-alias T="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
-alias killemacs="emacsclient -e '(kill-emacs)'"
+alias ec="emacsclient -c -n -a nano"
+alias et="emacsclient -t -a nano"
+alias ecs="SUDO_EDITOR=\"emacsclient -c -n -a emacs\" sudoedit"
+alias ets="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
+alias killemacs="emacsclient --eval \"(kill-emacs)\""
+
+alias todo="emacsclient -c -n -a nano ~/git/org/todo.org"
+# windows aliases
+alias excel="/c/Program\ Files/Microsoft\ Office/OFFICE11/EXCEL.EXE "
 
 alias -g H='| head'
 alias -g T='| tail'
@@ -152,6 +156,7 @@ alias -s tar="tar tf"
 alias -s tar.gz="echo "
 alias -s ace="unace l"
 alias -s txt="cat"
+alias -s xls="/c/Program\ Files/Microsoft\ Office/OFFICE11/EXCEL.EXE"
 
 # Keys
 bindkey "^R" history-incremental-pattern-search-backward

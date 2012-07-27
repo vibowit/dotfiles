@@ -1,5 +1,5 @@
 ! vibowit's .Xdefaults file
-! Time-stamp: <2012-07-20 14:23:05 by bwitkowski>
+! Time-stamp: <2012-07-26 10:53:25 by bwitkowski>
 
 !{{{ XFT
 Xft.dpi:       96
@@ -31,6 +31,7 @@ urxvt*secondaryScroll:    true
 urxvt*saveLines:         65535
 urxvt*cursorBlink:       false
 !urxvt*cursorUnderline:   true
+urxvt*visualBell:         true
 urxvt*urgentOnBell:       true
 !urxvt*override-redirect:false
 !urxvt*borderLess:       false

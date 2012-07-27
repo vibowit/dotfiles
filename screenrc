@@ -1,20 +1,40 @@
 # vibowit's .screenrc file
-# Time-stamp: <2012-07-20 14:22:26 by bwitkowski>
+# Time-stamp: <2012-07-27 12:18:49 by bwitkowski>
+
+shell /usr/bin/zsh
 
 defscrollback 5000
 altscreen on
+
 term screen-256color
 terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 termcapinfo xterm* ti@:te@
+
 hardstatus off
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
-startup_message off
-# shell -/bin/zsh
-# shelltitle '$ |zsh'
 
-screen -t "SAS tst" 3 ssh bwitkows@sastst
-screen -t "SAS prd" 2 ssh bwitkows@sas_srv
+# window numbering starts on 1
+bind c screen 1
+bind 0 select 10
+screen 1
+
+screen -t home 1
 screen -t local 1
+screen -t "SAS tst" 1 ssh bwitkows@sastst
+screen -t "SAS prd" 1 ssh bwitkows@sas_srv
 
-# screen -t "Chat" 4 ssh vibowit@vibowit@homeip.net
+# select first window
+select 1
+
+# use backtick for prefix key instead of ctrl-a
+escape ``
+
+# use regular audible bell
+vbell off
+
+# skip intro
+startup_message off
+
+# detach on disconnect
+autodetach on
