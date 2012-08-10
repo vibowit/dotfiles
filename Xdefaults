@@ -1,5 +1,5 @@
 ! vibowit's .Xdefaults file
-! Time-stamp: <2012-07-26 10:53:25 by bwitkowski>
+! Time-stamp: <2012-08-02 11:28:31 by bwitkowski>
 
 !{{{ XFT
 Xft.dpi:       96
@@ -18,7 +18,9 @@ emacs*bitmapIcon:    on
 emacs*visualBell:    on
 emacs.FontBackend:   xft
 !emacs*font:         Bitstream Vera Sans Mono-11
-emacs*font:   	     DejaVu Sans Mono-11
+emacs*font:   	     DejaVu Sans Mono-10
+!emacs*font:   	     Terminus-12
+!emacs*boldFont:      Inconsolata Bold-11
 !emacs*font: 	     xft:Bitstream Vera Sans Mono:size=12
 
 !{{{ URXVT

@@ -2,7 +2,7 @@
 ;; -----------------------------------------------------------------------
 ;;  vibowit's .emacs file
 ;; -----------------------------------------------------------------------
-;; Time-stamp: <2012-07-27 15:00:55 by bwitkowski>
+;; Time-stamp: <2012-07-30 12:09:29 by bwitkowski>
 
 ;; add plugins subdirs to load-path
 (let ((default-directory "~/.emacs.d/plugins/"))
@@ -844,3 +844,4 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 ; (add-to-list 'load-path "~/.emacs.d/plugins")
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
+(put 'upcase-region 'disabled nil)
