@@ -2,7 +2,7 @@
 ;; -----------------------------------------------------------------------
 ;;  vibowit's .emacs file
 ;; -----------------------------------------------------------------------
-;; Time-stamp: <2012-07-30 12:09:29 by bwitkowski>
+;; Time-stamp: <2012-09-13 12:31:49 by bwitkowski>
 
 ;; add plugins subdirs to load-path
 (let ((default-directory "~/.emacs.d/plugins/"))
@@ -79,8 +79,14 @@
 ;; backup
 ;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
 (custom-set-variables
-  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
-  '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
+ '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
+ '(canlock-password "6b4df0646528edda44fa6eeb8fe323f7cc32fccc")
+ '(gnus-select-method (quote (nntp "bull" (nntp-address "bull") (nntp-via-address "vibowit.homeip.net") (nntp-via-user-name "vibowit") (nntp-via-rlogin-command "ssh") (nntp-via-rlogin-command-switches ("-C")) (nntp-open-connection-function nntp-open-via-rlogin-and-netcat)))))
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
@@ -95,6 +101,17 @@
 ;;no extra whitespace after lines
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;;--------------------------------------------
+
+;; -----------------------------------------------------------------------
+;; edit with emacs server
+;; -----------------------------------------------------------------------
+(require 'edit-server)
+(edit-server-start)
+
+;; -----------------------------------------------------------------------
+;; spell checking
+;; -----------------------------------------------------------------------
+(setq-default ispell-program-name "aspell")
 
 ;; -----------------------------------------------------------------------
 ;; Personal Keybindings
@@ -845,3 +862,9 @@ When not restricted, skip project and sub-project tasks, habits, and project rel
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
 (put 'upcase-region 'disabled nil)
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )

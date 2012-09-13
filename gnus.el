@@ -1,5 +1,9 @@
-(setq user-mail-address "vibowit@vibowit.com")
-(setq user-full-name "vibowit")
+(setq user-mail-address "vibowit@nie.dziala.nic")
+(setq user-full-name "Boguslaw Witkowski")
+
+
+(setq message-required-news-headers
+      (delq 'Message-ID message-required-news-headers))
 
 (custom-set-variables
  '(gnus-select-method

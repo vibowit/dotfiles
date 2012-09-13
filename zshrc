@@ -1,6 +1,6 @@
 # -*- mode: Shell-script; -*-
 # vibowit's .zshrc file
-# Time-stamp: <2012-07-27 15:36:45 by bwitkowski>
+# Time-stamp: <2012-09-13 12:26:34 by bwitkowski>
 
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
@@ -25,7 +25,7 @@ ZSH_THEME="candy"
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -123,6 +123,7 @@ alias killemacs="emacsclient --eval \"(kill-emacs)\""
 alias todo="emacsclient -c -n -a nano ~/git/org/todo.org"
 # windows aliases
 alias excel="/c/Program\ Files/Microsoft\ Office/OFFICE11/EXCEL.EXE "
+alias eguide="/c/Program\ Files/SAS/EnterpriseGuide/4.3/SEGuide.exe "
 
 alias -g H='| head'
 alias -g T='| tail'
@@ -159,6 +160,7 @@ alias -s tar.gz="echo "
 alias -s ace="unace l"
 alias -s txt="cat"
 alias -s xls="/c/Program\ Files/Microsoft\ Office/OFFICE11/EXCEL.EXE"
+alias -s egp="/c/Program\ Files/SAS/EnterpriseGuide/4.3/SEGuide.exe"
 
 # Keys
 bindkey "^R" history-incremental-pattern-search-backward
