@@ -1,6 +1,6 @@
 # -*- mode: Shell-script; -*-
 # vibowit's .zshrc file
-# Time-stamp: <2012-09-13 12:26:34 by bwitkowski>
+# Time-stamp: <2012-09-14 09:55:27 by bwitkowski>
 
 # Nie mogę zapamiętać nazw programów to sobie wypiszę
 # wgetpaste - wrzucanie do pastebin
@@ -114,9 +114,9 @@ alias egrep='egrep --colour=auto'
 alias ls='ls --color=auto --human-readable --group-directories-first --classify'
 
 alias vi="emacsclient -c"
-alias ec="emacsclient -c -n -a nano"
+alias ec="emacsclient -c -a nano"
 alias et="emacsclient -t -a nano"
-alias ecs="SUDO_EDITOR=\"emacsclient -c -n -a emacs\" sudoedit"
+alias ecs="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
 alias ets="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
 alias killemacs="emacsclient --eval \"(kill-emacs)\""
 
