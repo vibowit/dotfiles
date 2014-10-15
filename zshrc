@@ -11,7 +11,7 @@ ZSH_THEME="kolo"
 #ZSH_THEME="mauromorales"
 
 # Example aliases
-alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+# alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
