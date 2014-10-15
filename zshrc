@@ -11,9 +11,9 @@ ZSH_THEME="kolo"
 #ZSH_THEME="mauromorales"
 
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
