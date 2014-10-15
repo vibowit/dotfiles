@@ -69,6 +69,7 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 
 " Quick ESC
+imap jj <ESC>
 imap jk <ESC>
 
 " Jump to the next row on long lines
