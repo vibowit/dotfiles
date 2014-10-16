@@ -33,7 +33,7 @@ Bundle "tomtom/tlib_vim"
 Bundle "sirver/UltiSnips"
 Bundle "rking/ag.vim"
 
-  " Optional:
+" Optional:
 Bundle "honza/vim-snippets"
 
 filetype plugin indent on
@@ -68,13 +68,20 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 
+" Some Mappings
+:nnoremap <leader>ev :vsplit ~/dotfiles/vimrc<cr>
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+
 " Quick ESC
-imap jj <ESC>
-imap jk <ESC>
+" inoremap jj <esc>
+inoremap jk <esc>
+
+" better newline
+inoremap <c-enter> <esc>o
 
 " Jump to the next row on long lines
-map <Down> gj
-map <Up>   gk
+noremap <Down> gj
+noremap <Up>   gk
 nnoremap j gj
 nnoremap k gk
 
@@ -85,10 +92,10 @@ nnoremap gV `[v`]
 nnoremap <leader><space> :nohlsearch<cr>
 
 " Jump to next window
-map <leader>w <C-w>w
+noremap <leader>w <C-w>w
 
 " Format the entire file
-nmap <leader>fef ggVG=
+nnoremap <leader>fef ggVG=
 
 " CtrlP
 nnoremap <silent><leader>t :CtrlP<cr>
@@ -99,11 +106,11 @@ let g:ctrlp_max_files = 600
 let g:ctrlp_max_depth = 5
 
 " NERDTree
-map <leader>n :NERDTreeToggle<cr>
+noremap <leader>n :NERDTreeToggle<cr>
 let NERDTreeQuitOnOpen = 0
 
 " Gundo
-map <leader>u :GundoToggle<cr>
+noremap <leader>u :GundoToggle<cr>
 
 let g:solarized_termcolors = 256
 let g:solarized_visibility = "high"
