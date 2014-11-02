@@ -7,8 +7,10 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="agnoster-vi"
 #ZSH_THEME="ys"
-ZSH_THEME="kolo"
+# ZSH_THEME="kolo"
+ZSH_THEME="steeef"
 #ZSH_THEME="mauromorales"
+# ZSH_THEME="vibo"
 
 # Example aliases
 # alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
