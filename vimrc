@@ -41,9 +41,13 @@ Bundle "christoomey/vim-tmux-navigator"
 " Optional:
 Bundle "honza/vim-snippets"
 
+" some django specyfic
+Bundle "mattn/emmet-vim"
+Bundle "scrooloose/syntastic"
+
 filetype plugin indent on
 
-let mapleader=","
+" let mapleader=","
 
 set backspace=indent,eol,start
 set cursorline
@@ -56,7 +60,7 @@ else
    set clipboard=unnamed
 endif
 set synmaxcol=128
-set ttyscroll=10
+" set ttyscroll=10
 set encoding=utf-8
 set tabstop=2
 set nowrap
@@ -87,9 +91,32 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 
-" Some Mappings
-nnoremap <leader>ev :split ~/dotfiles/vimrc<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+" ----------------------------------------------------------------------
+"  Leader Mappings
+" ----------------------------------------------------------------------
+let mapleader = "\<space>"
+let localleader = "\\"
+
+" R/W
+nnoremap <leader>q :q<cr>
+nnoremap <leader>x :x<cr>
+nnoremap <leader>w :w<cr>
+nnoremap <leader>e :e<cr>
+
+" Misc
+nnoremap <leader>tt :split .todo<cr>
+nnoremap <leader>S $zf%
+nnoremap <leader>mr :let @a=@"<cr>
+nnoremap <leader><space> :nohlsearch<cr>
+
+" Meta
+nnoremap <leader>me :edit ~/dotfiles/vimrc<cr>
+nnoremap <leader>mr :source $MYVIMRC<cr>
+nnoremap <leader>mx "xy@x<cr>
+
+" Toggle things
+nnoremap <leader>tn :NERDTreeToggle<CR>
+nnoremap <leader>tl :set relativenumber!<cr>
 
 " Quick ESC
 " inoremap jj <esc>
@@ -97,28 +124,27 @@ inoremap jk <esc>
 inoremap kj <esc>
 
 " better newline
-inoremap <c-j> <esc>o
+inoremap <C-g><Enter> <esc>o
 
 " Jump to the next row on long lines
 noremap <Down> gj
 noremap <Up>   gk
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
 
 " Highlilght last inserted text
 nnoremap gV `[v`]
 
 " Turn off search highlight
-nnoremap <leader><space> :nohlsearch<cr>
 
 " shortcuts for windows
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s
 " nnoremap <leader>vsa :vert sba<cr>
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 " Format the entire file
 nnoremap <leader>fef ggVG=
@@ -128,10 +154,10 @@ let g:ctrlp_clear_cache_on_exit=1
 let g:ctrlp_max_height=40
 let g:ctrlp_show_hidden=0
 let g:ctrlp_follow_symlinks=1
-let g:ctrlp_max_files=1000
+let g:ctrlp_max_files=600
 let g:ctrlp_max_depth = 5
 let g:ctrlp_custom_ignore = {
-         \ 'dir': '\v[\/]\.(git|hg|svn|idea)$',
+         \ 'dir': '\v[\/]\.(git|hg|svn|idea|cache)$',
          \ 'file': '\v\.DS_Store$'
          \ }
 if executable('ag')
@@ -152,7 +178,6 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeChDirMode=0
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.git','\.hg']
-nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :NERDTreeFind<CR>
 
 " make YCM compatible with UltiSnips (using supertab)
@@ -181,17 +206,22 @@ noremap <leader>u :GundoToggle<cr>
 " Airline
 let g:airline_powerline_fonts=1
 
+" Django improvements
+au BufNewFile,BufRead *.html setlocal filetype=htmldjango
+au BufNewFile,BufRead urls.py setlocal nowrap
+
+
 " toggle paste
 map <F6> :set invpaste<CR>:set paste?<CR>
 " remap arrow keys
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
-nnoremap <up> :tabnext<cr>
-nnoremap <down> :tabprev<cr>
+" nnoremap <up> :tabnext<cr>
+" nnoremap <down> :tabprev<cr>
 
 " change cursor position in insert mode
-inoremap <C-h> <left>
-inoremap <C-l> <right>
+" inoremap <C-h> <left>
+" inoremap <C-l> <right>
 
 "noremap noremap "
 syntax on
@@ -207,4 +237,15 @@ set background=dark
 set ttyfast
 set mouse=a
 set mousehide
-set ttymouse=xterm2
+" set ttymouse=xterm2
+"
+"
+" only neovim
+" tnoremap <Esc> <C-\><C-n>
+
+if has('nvim')
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+  " Hack to get C-h working in neovim
+  nmap <BS> <C-W>h
+  tnoremap <Esc> <C-\><C-n>
+endif

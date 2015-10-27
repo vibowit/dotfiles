@@ -8,8 +8,8 @@ ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="agnoster-vi"
 #ZSH_THEME="ys"
 # ZSH_THEME="kolo"
-ZSH_THEME="steeef"
-#ZSH_THEME="mauromorales"
+#ZSH_THEME="steeef"
+ZSH_THEME="bira"
 # ZSH_THEME="vibo"
 
 # Example aliases
