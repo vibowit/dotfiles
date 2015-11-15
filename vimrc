@@ -45,12 +45,25 @@ Bundle "honza/vim-snippets"
 Bundle "mattn/emmet-vim"
 Bundle "scrooloose/syntastic"
 
+" Bundle "laktek/distraction-free-writing-vim"
+
+" markdown
+Bundle 'godlygeek/tabular'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'itspriddle/vim-marked'
+Bundle 'junegunn/goyo.vim'
+Bundle 'junegunn/limelight.vim'
+Bundle 'junegunn/seoul256.vim'
+
+
 filetype plugin indent on
 
 " let mapleader=","
 
 set backspace=indent,eol,start
-set cursorline
+set cursorline cursorcolumn
+" let &colorcolumn=join(range(81,999),",")
+let &colorcolumn=81
 set expandtab
 set modelines=2
 set shiftwidth=3
@@ -210,6 +223,11 @@ let g:airline_powerline_fonts=1
 au BufNewFile,BufRead *.html setlocal filetype=htmldjango
 au BufNewFile,BufRead urls.py setlocal nowrap
 
+" markdown improvements
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+map <F4> :Goyo<cr>
 
 " toggle paste
 map <F6> :set invpaste<CR>:set paste?<CR>
@@ -229,7 +247,9 @@ syntax on
 "let g:solarized_visibility = "high"
 "let g:solarized_contrast = "high"
 let g:solarized_termtrans = 1
-colorscheme solarized
+" colorscheme solarized
+let g:seoul256_background = 235
+colorsche seoul256
 
 set background=dark
 
@@ -249,3 +269,4 @@ if has('nvim')
   nmap <BS> <C-W>h
   tnoremap <Esc> <C-\><C-n>
 endif
+

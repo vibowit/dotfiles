@@ -84,3 +84,11 @@ fi
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+
+alias v='workon'
+alias v.deactivate='deactivate'
+alias v.mk='mkvirtualenv'
+alias v.rm='rmvirtualenv'
+alias v.switch='workon'
+alias v.cd='cdvirtualenv'
+
