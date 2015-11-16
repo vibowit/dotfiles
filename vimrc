@@ -1,64 +1,59 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-"My Bundles
-Bundle 'andrewle/vim-autoclose'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-fugitive'
-Bundle "tpope/vim-sensible.git"
-Bundle "airblade/vim-gitgutter"
-Bundle "sjl/gundo.vim.git"
+" TPope plugins
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+" Plugin "tpope/vim-sensible.git"
 
-Bundle 'kien/ctrlp.vim'
-Bundle "scrooloose/nerdtree"
-Bundle "Lokaltog/vim-easymotion"
+Plugin 'airblade/vim-gitgutter'
+Plugin 'sjl/gundo.vim.git'
 
-Bundle "bling/vim-airline"
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+" Plugin 'Lokaltog/vim-easymotion'
+
+Plugin 'bling/vim-airline'
+
+Plugin 'andrewle/vim-autoclose'
 
 " Color schemes
-Bundle 'altercation/vim-colors-solarized'
-Bundle "tomasr/molokai"
-Bundle "Lokaltog/vim-distinguished"
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'Lokaltog/vim-distinguished'
 
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "tomtom/tcomment_vim"
-Bundle "rking/ag.vim"
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'rking/ag.vim'
 
-Bundle 'ervandew/supertab'
-Bundle "valloric/YouCompleteMe"
-Bundle "sirver/UltiSnips"
+" Code completion
+" Bundle 'ervandew/supertab'
+" Bundle "valloric/YouCompleteMe"
+" Bundle "sirver/UltiSnips"
 " Bundle "garbas/vim-snipmate"
+" Bundle "honza/vim-snippets"
 
-Bundle "christoomey/vim-tmux-navigator"
+Plugin 'christoomey/vim-tmux-navigator'
 
-" Optional:
-Bundle "honza/vim-snippets"
-
-" some django specyfic
-Bundle "mattn/emmet-vim"
-Bundle "scrooloose/syntastic"
-
-" Bundle "laktek/distraction-free-writing-vim"
+Plugin 'mattn/emmet-vim'
 
 " markdown
-Bundle 'godlygeek/tabular'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'itspriddle/vim-marked'
-Bundle 'junegunn/goyo.vim'
-Bundle 'junegunn/limelight.vim'
-Bundle 'junegunn/seoul256.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'itspriddle/vim-marked'
+Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
+Plugin 'junegunn/seoul256.vim'
 
-
-filetype plugin indent on
-
-" let mapleader=","
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 set backspace=indent,eol,start
 set cursorline cursorcolumn
@@ -123,7 +118,7 @@ nnoremap <leader>mr :let @a=@"<cr>
 nnoremap <leader><space> :nohlsearch<cr>
 
 " Meta
-nnoremap <leader>me :edit ~/dotfiles/vimrc<cr>
+nnoremap <leader>me :edit ~/Projects/dotfiles/vimrc<cr>
 nnoremap <leader>mr :source $MYVIMRC<cr>
 nnoremap <leader>mx "xy@x<cr>
 
@@ -144,7 +139,7 @@ noremap <Down> gj
 noremap <Up>   gk
 " nnoremap j gj
 " nnoremap k gk
-
+"
 " Highlilght last inserted text
 nnoremap gV `[v`]
 
@@ -193,26 +188,6 @@ let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.git','\.hg']
 nnoremap <F3> :NERDTreeFind<CR>
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:ycm_collect_identifiers_from_tags_files = 1 " let YCM read tags from Ctags file
-let g:ycm_use_ultisnips_compelter = 1
-let g:ycm_seed_identifiers_with_syntax = 1 " complete for programmming language keywords
-let g:ycm_complete_in_comments = 1 " complete in comments
-let g:ycm_complete_in_strings = 1 " completion in strings
-
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = "<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>""
-let g:UltiSnipsExpandTrigger = "<c-j>"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
-let g:UltisnipsListSnippets = "<c-k>" " List possible snippets based on current file
-
-
 " Gundo
 noremap <leader>u :GundoToggle<cr>
 
@@ -231,37 +206,21 @@ map <F4> :Goyo<cr>
 
 " toggle paste
 map <F6> :set invpaste<CR>:set paste?<CR>
+
 " remap arrow keys
 nnoremap <left> :bprev<cr>
 nnoremap <right> :bnext<cr>
-" nnoremap <up> :tabnext<cr>
-" nnoremap <down> :tabprev<cr>
 
-" change cursor position in insert mode
-" inoremap <C-h> <left>
-" inoremap <C-l> <right>
 
-"noremap noremap "
 syntax on
-"let g:solarized_termcolors = 256
-"let g:solarized_visibility = "high"
-"let g:solarized_contrast = "high"
-let g:solarized_termtrans = 1
-" colorscheme solarized
 let g:seoul256_background = 235
 colorsche seoul256
-
 set background=dark
 
 " add mouse to terminal
 set ttyfast
 set mouse=a
 set mousehide
-" set ttymouse=xterm2
-"
-"
-" only neovim
-" tnoremap <Esc> <C-\><C-n>
 
 if has('nvim')
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
