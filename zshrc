@@ -1,94 +1,100 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="agnoster-vi"
-#ZSH_THEME="ys"
-# ZSH_THEME="kolo"
-#ZSH_THEME="steeef"
-ZSH_THEME="bira"
-# ZSH_THEME="vibo"
-
-# Example aliases
-# alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Uncomment this to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how often before auto-updates occur? (in days)
-export UPDATE_ZSH_DAYS=13
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want to disable command autocorrection
-# DISABLE_CORRECTION="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment following line if you want to disable marking untracked files under
-# VCS as dirty. This makes repository status check for large repositories much,
-# much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment following line if you want to  shown in the command execution time stamp
-# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
-# yyyy-mm-dd
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx ruby brew bundler heroku vagrant rsync battery)
-
-source $ZSH/oh-my-zsh.sh
-
-bindkey -v
-bindkey '^R' history-incremental-search-backward
-bindkey -M viins 'jj' vi-cmd-mode
-bindkey -M viins 'jk' vi-cmd-mode
-
-# virtualenv setup
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Projects
-source /usr/local/bin/virtualenvwrapper.sh
-
-# User configuration
-
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+autoload -Uz compinit
+typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+if [ $(date +'%j') != $updated_at ]; then
+  compinit -i
 else
-  export EDITOR='mvim'
+  compinit -C -i
 fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+zmodload -i zsh/complist
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
 
-alias v='workon'
-alias v.deactivate='deactivate'
-alias v.mk='mkvirtualenv'
-alias v.rm='rmvirtualenv'
-alias v.switch='workon'
-alias v.cd='cdvirtualenv'
+setopt hist_ignore_all_dups # remove older duplicate entries from history
+setopt hist_reduce_blanks # remove superfluous blanks from history items
+setopt inc_append_history # save history entries as soon as they are entered
+setopt share_history # share history between different instances of the shell
 
+setopt auto_cd # cd by typing directory name if it's not a command
+
+setopt correct_all # autocorrect commands
+
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+# bindkey '^[[3~' delete-char
+# bindkey '^[3;5~' delete-char
+
+source <(antibody init)
+antibody bundle zdharma/fast-syntax-highlighting
+antibody bundle zsh-users/zsh-autosuggestions
+antibody bundle zsh-users/zsh-history-substring-search
+antibody bundle zsh-users/zsh-completions
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# SPACESHIP_PROMPT_ORDER=(
+#   user          # Username section
+#   dir           # Current directory section
+#   host          # Hostname section
+#   git           # Git section (git_branch + git_status)
+#   hg            # Mercurial section (hg_branch  + hg_status)
+#   exec_time     # Execution time
+#   line_sep      # Line break
+#   vi_mode       # Vi-mode indicator
+#   jobs          # Background jobs indicator
+#   exit_code     # Exit code section
+#   char          # Prompt character
+# )
+# SPACESHIP_PROMPT_ADD_NEWLINE=false
+# SPACESHIP_CHAR_SYMBOL="❯"
+# SPACESHIP_CHAR_SUFFIX=" "
+
+# antibody bundle denysdovhan/spaceship-prompt
+
+fpath+=$HOME/.zsh/zsh-clean
+
+autoload -U promptinit; promptinit
+prompt wordy # for Xterm
+
+# add node_modules path
+path+=($HOME/node_modules/.bin)
+
+# functions
+function ssh() { /usr/bin/ssh -t $@ "tmux attach || tmux new"; }
+
+# aliases
+
+alias ls="ls --color"
+alias ll="ls -la --color"
+alias install="sudo apt install"
+alias remove="sudo apt remove --purge"
+alias search="sudo apt search"
+alias upgrade="sudo apt update; sudo apt upgrade -y"
+alias -s md="code"
+alias -s txt="code"
+alias vim="nvim"
+alias v="vim"
+alias api="cd ~/go/src/github.com/vibowit/pointers"
+
+# If i use flatpak version of neovim
+# There is one problem with flatpak version. It does not integrate with tmux well.
+
+#alias nvim="/var/lib/flatpak/exports/bin/io.neovim.nvim"
+#alias vim="/var/lib/flatpak/exports/bin/io.neovim.nvim"
+
+export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
