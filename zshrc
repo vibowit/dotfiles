@@ -81,7 +81,7 @@ alias search="sudo apt search"
 alias upgrade="sudo apt update; sudo apt upgrade -y"
 alias -s md="code"
 alias -s txt="code"
-alias vim="nvim"
+# alias vim="nvim"
 alias v="vim"
 alias api="cd ~/go/src/github.com/vibowit/pointers"
 
