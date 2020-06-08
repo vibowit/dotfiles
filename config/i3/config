@@ -111,13 +111,13 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 set $ws1 "1:term"
 set $ws2 "2:web"
 set $ws3 "3:file"
-set $ws4 "4:gimp"
-set $ws5 "5:5"
-set $ws6 "6:6"
-set $ws7 "7:music"
-set $ws8 "8:7"
-set $ws9 "9:8"
-set $ws10 "10:10"
+set $ws4 "4:music"
+set $ws5 "5:graph"
+set $ws6 "6:chat"
+set $ws7 "7:d7"
+set $ws8 "8:d8"
+set $ws9 "9:d9"
+set $ws10 "10:d10"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -148,7 +148,20 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Create Log out, Reboot, Poweroff bindings
+mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym $mod+r exec systemctl reboot
+        bindsym $mod+l exit
+        bindsym $mod+p exec systemctl poweroff
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -242,9 +255,9 @@ mode "$mode_gaps_outer" {
 # }
 #
 
-exec xset +fp /home/vibo/.local/share/fonts
-exec xset fp rehash
-
+# to chyba nie jest mi potrzebne
+# exec xset +fp /home/vibo/.local/share/fonts
+# exec xset fp rehash
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
@@ -254,13 +267,17 @@ exec_always xfce4-power-manager
 exec_always /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 # exec pnmixer
 exec redshift
-exec_always package-update-indicator
 
-exec i3-sensible-terminal
+# remap caps to control + escape
+exec_always setxkbmap -option ctrl:nocaps
+exec_always xcape -e 'Control_L=Escape'
+
+exec terminator
 exec google-chrome
 
 # Keybinding fof i3lock
 bindsym $mod+x exec i3lock-fancy
+bindsym $mod+Shift+x exec obsession-logout
 
 # Assign programs to workspaces
 for_window [class="Google-chrome"] move to workspace $ws2

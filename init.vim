@@ -75,7 +75,10 @@ nnoremap <C-n> :call OpenTerminal()<CR><Paste>
 " ==== Colorscheme ====
 "
 colorscheme nord
-
+highlight! Normal ctermbg=NONE guibg=NONE
+highlight! NonText ctermbg=NONE guibg=NONE
+highlight! clear LineNr
+highlight! clear SignColumn
 "
 " ==== Airline ====
 "
