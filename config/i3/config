@@ -286,4 +286,4 @@ for_window [class="Firefox-esr"] move to workspace $ws2
 for_window [class="Spotify"] move to workspace $ws7
 
 # Run compositor
-exec_always picom -f
+exec_always picom -cGbf
