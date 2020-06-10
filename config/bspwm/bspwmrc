@@ -1,0 +1,54 @@
+#! /bin/sh
+sxhkd &
+
+border=2
+gap=10
+padding=5
+ratio=0.55
+
+#bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+
+bspc config border_width         $border
+bspc config window_gap           $gap
+bspc config top_padding          $padding
+bspc config bottom_padding       $padding
+bspc config left_padding         $padding
+bspc config right_padding        $padding
+
+bspc config split_ratio          $ratio
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Pavucontrol state=floating
+bspc rule -a URxvt state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+xrdb ~/.Xresources
+xsetroot -cursor_name left_ptr &
+redshift -x
+nitrogen --restore
+compton -f &
+xbindkeys
+dunst &
+nm-applet &
+blueman-applet &
+redshift &
+/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+
+# xautolock -locker 'betterlockscreen -l dim' -detectsleep -time 1 -notify 25 -corners ---- -cornerdelay 10 -cornersize 20 -notifier "dunstify -a System -u critical System 'Locking in 25 seconds.'" &
+# to zerzniete, probuje dostosowac
+# redshift -c /home/zsucrilhos/.config/redshift.conf &
+# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# xautolock -locker 'betterlockscreen -l dim' -time 1 -notify 25 -corners ---- -cornerdelay 10 -cornersize 20 -notifier "dunstify -a System -u critical System 'Locking in 25 seconds.'" &
+#
+# /home/zsucrilhos/_my-scripts/polybarstart-bspwm &
+# /home/zsucrilhos/_my-scripts/dpms.sh &
+# /home/zsucrilhos/_my-scripts/lightsOn.sh &
+#
+$HOME/.config/polybar/launch.sh
+dunstify -a System -u critical System $'System started sucessfully.\nAll apps running and OK.'
