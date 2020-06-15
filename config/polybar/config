@@ -382,6 +382,9 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 type = internal/alsa
 interval = 5
 
+master-soundcard = hw:1
+; master-mixer = IEC958
+
 format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage:3%%
 label-muted = muted

@@ -2,6 +2,10 @@
 # wm independent hotkeys
 #
 
+# screen locking
+super + x
+	betterlockscreen -l dimblur
+
 # terminal emulator
 super + Return
 #	urxvt
