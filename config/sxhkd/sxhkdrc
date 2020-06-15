@@ -2,10 +2,6 @@
 # wm independent hotkeys
 #
 
-# screen locking
-super + x
-	betterlockscreen -l dimblur
-
 # terminal emulator
 super + Return
 #	urxvt
@@ -19,6 +15,30 @@ super + @space
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
+
+# Increase volume
+XF86AudioRaiseVolume
+	amixer -c1 set Master 5%+
+
+# Decrease volume
+XF86AudioLowerVolume
+	amixer -c1 set Master 5%-
+
+# Mute volume
+XF86AudioMute
+	amixer -c1 set Master toggle
+
+# brightness up
+XF86MonBrightnessUp
+	xbacklight -inc 10
+
+# brightness down
+XF86MonBrightnessDown
+	xbacklight -dec 10
+
+# screen locking
+super + shift + l
+	betterlockscreen -l dimblur
 
 #
 # bspwm hotkeys
