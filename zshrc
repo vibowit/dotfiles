@@ -85,6 +85,7 @@ alias -s txt="code"
 alias vim="nvim"
 alias v="nvim"
 alias api="cd ~/go/src/github.com/vibowit/pointers"
+alias nasdom='env TERM=xterm-256color ssh admin@nasdom'
 
 # If i use flatpak version of neovim
 # There is one problem with flatpak version. It does not integrate with tmux well.

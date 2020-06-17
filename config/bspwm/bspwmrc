@@ -36,10 +36,11 @@ xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr &
 redshift -x
 nitrogen --restore
-compton -f &
+# compton -f &
+picom -fc &
 xbindkeys
 dunst &
-nm-applet &
+# nm-applet &
 blueman-applet &
 redshift &
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
