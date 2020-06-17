@@ -76,7 +76,7 @@ font-5 = Font Awesome 5 Brands Regular:size=10;0
 modules-left = bspwm
 modules-center = xwindow
 ;modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
-modules-right = wlan eth filesystem temperature info-redshift-temp
+modules-right = updates-xbps wlan eth filesystem temperature info-redshift-temp
 ;modules-right = eth filesystem temperature info-redshift-temp
 
 ;tray-background = #0063ff
@@ -486,6 +486,11 @@ menu-0-1-exec = systemctl reboot
 
 menu-0-2 =  
 menu-0-2-exec = systemctl poweroff
+
+[module/updates-xbps]
+type = custom/script
+exec = ~/.config/polybar/scripts/updates-xbps.sh
+interval = 20
 
 [settings]
 screenchange-reload = true
