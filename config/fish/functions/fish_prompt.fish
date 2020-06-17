@@ -1,0 +1,1 @@
+/home/vibo/.local/share/omf/themes/spacefish/fish_prompt.fish
