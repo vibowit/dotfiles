@@ -86,6 +86,12 @@ alias vim="nvim"
 alias v="nvim"
 alias api="cd ~/go/src/github.com/vibowit/pointers"
 alias nasdom='env TERM=xterm-256color ssh admin@nasdom'
+alias halt="sudo halt"
+alias poweroff="sudo poweroff"
+alias reboot="sudo reboot"
+alias shutdown="sudo shutdown"
+alias zzz="sudo zzz"
+alias ZZZ="sudo ZZZ"
 
 # If i use flatpak version of neovim
 # There is one problem with flatpak version. It does not integrate with tmux well.
