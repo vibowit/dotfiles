@@ -63,8 +63,8 @@ bindkey '^[[B' history-substring-search-down
 
 fpath+=$HOME/.zsh/zsh-clean
 
-autoload -U promptinit; promptinit
-prompt wordy # for Xterm
+# autoload -U promptinit; promptinit
+# prompt wordy # for Xterm
 
 # add node_modules path
 path+=($HOME/node_modules/.bin)
@@ -100,3 +100,8 @@ export GOBIN=$HOME/go/bin
 
 export PATH="${PATH}:${HOME}/.local/bin/:/usr/local/go/bin:$GOPATH/bin"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fpath=($fpath "/home/vibo/.zfunctions")
+
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
