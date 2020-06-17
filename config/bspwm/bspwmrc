@@ -32,24 +32,26 @@ bspc rule -a URxvt state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 
-xrdb ~/.Xresources
+# xrdb ~/.Xresources
 xsetroot -cursor_name left_ptr &
 redshift -x
 nitrogen --restore
 # compton -f &
 picom -fc &
-xbindkeys
+# xbindkeys
 dunst &
 # nm-applet &
-blueman-applet &
+# blueman-applet &
 redshift &
-/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
-# /usr/libexec/polkit-mate-authentication-agent-1 &
+
+pcmanfm -d &
+# notify-send "Starting Thunar" && export $(dbus-launch) && Thunar --daemon &
+
+/usr/libexec/polkit-mate-authentication-agent-1 &
 
 # xautolock -locker 'betterlockscreen -l dim' -detectsleep -time 1 -notify 25 -corners ---- -cornerdelay 10 -cornersize 20 -notifier "dunstify -a System -u critical System 'Locking in 25 seconds.'" &
 # to zerzniete, probuje dostosowac
 # redshift -c /home/zsucrilhos/.config/redshift.conf &
-# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 # xautolock -locker 'betterlockscreen -l dim' -time 1 -notify 25 -corners ---- -cornerdelay 10 -cornersize 20 -notifier "dunstify -a System -u critical System 'Locking in 25 seconds.'" &
 #
 # /home/zsucrilhos/_my-scripts/polybarstart-bspwm &
