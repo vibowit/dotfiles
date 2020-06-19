@@ -92,6 +92,7 @@ alias reboot="sudo reboot"
 alias shutdown="sudo shutdown"
 alias zzz="sudo zzz"
 alias ZZZ="sudo ZZZ"
+alias ssh="env TERM=xterm-256color ssh"
 
 # If i use flatpak version of neovim
 # There is one problem with flatpak version. It does not integrate with tmux well.

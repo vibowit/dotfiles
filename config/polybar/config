@@ -482,10 +482,10 @@ menu-0-0 = 
 menu-0-0-exec = betterlockscreen -l 
 
 menu-0-1 = 
-menu-0-1-exec = systemctl reboot
+menu-0-1-exec = sudo reboot
 
 menu-0-2 =  
-menu-0-2-exec = systemctl poweroff
+menu-0-2-exec = sudo poweroff
 
 [module/updates-xbps]
 type = custom/script

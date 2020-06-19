@@ -23,10 +23,14 @@ bspc config split_ratio          $ratio
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a discord desktop='^5' state=floating follow=off
 bspc rule -a Chromium desktop='^2'
+bspc rule -a Pcmanfm desktop='^3'
+bspc rule -a Spotify desktop='^4'
+bspc rule -a discord desktop='^5' state=floating
+bspc rule -a Gimp desktop='^6' state=floating follow=on
+
 bspc rule -a mplayer2 state=floating
+bspc rule -a vlc state=floating
 bspc rule -a Pavucontrol state=floating
 bspc rule -a URxvt state=floating
 bspc rule -a Kupfer.py focus=on
@@ -44,6 +48,7 @@ dunst &
 # blueman-applet &
 redshift &
 
+# PCmanFM in daemon mode
 pcmanfm -d &
 # notify-send "Starting Thunar" && export $(dbus-launch) && Thunar --daemon &
 
