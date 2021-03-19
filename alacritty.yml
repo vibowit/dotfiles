@@ -32,7 +32,8 @@ scrolling:
 
 font:
   normal:
-    family: Hack
+    # family: Hack
+    family: Source Code Pro
 
 # Point size
   size: 11

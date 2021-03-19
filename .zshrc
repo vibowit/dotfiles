@@ -70,7 +70,7 @@ ZSH_THEME=""
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git suse ssh-agent)
+plugins=(git dnf ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -93,10 +93,9 @@ export DEEBOT_SECRET=Cyu5jcR4zyK6QEPn1hdIGXB5QIDAQABMA0GC
 #   export EDITOR='mvim'
 # fi
 export EDITOR='nvim'
-# export WINIT_HIDPI_FACTOR=1.0
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
