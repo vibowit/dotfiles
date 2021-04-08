@@ -5,13 +5,12 @@
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4)
 
-(eval-when-compile
-  (require 'use-package))
-
 ;; Disable tool bar, menu bar, scroll bar.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+(set-face-attribute 'default nil :font "Source Code Pro" :height 125)
 
 ;; Highlight current line.
 (global-hl-line-mode t)
@@ -39,6 +38,18 @@
 (global-display-line-numbers-mode t)
 
 
+;; global keybindings
+(use-package general
+  :config
+  (general-create-definer vibowit/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (vibowit/leader-keys
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")))
+
 ;; Enable Evil
 (use-package evil
   :init
@@ -51,6 +62,17 @@
   :after evil
   :config
   (evil-collection-init))
+
+(use-package hydra)
+
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
+
+(vibowit/leader-keys
+  "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 ;; Ivy
 (use-package counsel
@@ -177,17 +199,21 @@
   :hook (company-mode . company-box-mode))
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(flycheck yasnippet go-mode spinner all-the-icons-ivy evil use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/Code")
+    (setq projectile-project-search-path '("~/Code")))
+  (setq projectile-switch-project-action #'projectile-dired))
 
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
+(use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
