@@ -15,6 +15,8 @@
 ;; Highlight current line.
 (global-hl-line-mode t)
 
+
+
 ;; Require and initialize `package`.
 (require 'package)
 
@@ -35,8 +37,67 @@
 (setq use-package-always-ensure t)
 
 (column-number-mode)
-(global-display-line-numbers-mode t)
 
+(require 'display-line-numbers)
+(defcustom display-line-numbers-exempt-modes '(org-mode vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
+  "Major modes on which to disable the linum mode, exempts them from global requirement"
+  :group 'display-line-numbers
+  :type 'list
+  :version "green")
+
+(defun display-line-numbers--turn-on ()
+  "turn on line numbers but excempting certain majore modes defined in `display-line-numbers-exempt-modes'"
+  (if (and
+       (not (member major-mode display-line-numbers-exempt-modes))
+       (not (minibufferp)))
+      (display-line-numbers-mode)))
+
+(global-display-line-numbers-mode)
+
+(use-package olivetti
+  :ensure
+  :diminish
+  :config
+  (setq olivetti-body-width 0.65)
+  (setq olivetti-minimum-body-width 72)
+  (setq olivetti-recall-visual-line-mode-entry-state t))
+
+(defun me/org-mode ()
+  "My custom configuration for 'org-mode'."
+  (olivetti-mode)
+  (olivetti-set-width 120)
+  )
+(add-hook 'org-mode-hook 'me/org-mode)
+
+(add-hook 'text-mode-hook (lambda ()
+							(interactive)
+							(message "Olivetti text-mode-hook")
+							(olivetti-set-width 100)
+							(olivetti-mode 1)))
+
+;; Org mode
+(use-package org
+  :init
+  (add-hook 'org-mode-hook 'nolinum)
+  :config
+  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (setq org-log-done t)
+  (setq org-adapt-indentation nil)
+  (setq org-startup-indented t)
+  (setq org-adapt-folded t)
+  (setq org-ellipsis "⤶"))
+
+;; (use-package org-bullets
+;;   :commands org-bullets-mode
+;;   :init
+;;   (add-hook 'org-mode-hook 'org-bullets-mode)
+;;   (setq org-bullets-bullet-list '("◉" "○" "●" "►" "•")))
+
+(use-package org-superstar
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 ;; global keybindings
 (use-package general
@@ -47,13 +108,15 @@
     :global-prefix "C-SPC")
 
   (vibowit/leader-keys
-    "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")))
+	;; Toggles
+    "t"  '(:ignore t             :which-key "toggles")
+    "tt" '(counsel-load-theme    :which-key "choose theme")
+	"ts" '(hydra-text-scale/body :which-key "scale text")
+	"tw" '(whitespace-mode       :which-key "whitespace mode")))
 
 ;; Enable Evil
 (use-package evil
   :init
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
   :config
   (evil-mode 1))
@@ -71,8 +134,10 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
-(vibowit/leader-keys
-  "ts" '(hydra-text-scale/body :which-key "scale text"))
+(setq evil-want-fine-undo t)
+(setq whitespace-line-column 80
+	  whitespace-style '(face lines-tail))
+
 
 ;; Ivy
 (use-package counsel
@@ -217,3 +282,16 @@
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(yaml-mode org-superstar olivetti org-bullets yasnippet which-key use-package rainbow-delimiters magit lsp-mode ivy-rich hydra helpful go-mode general flycheck evil-collection doom-themes doom-modeline counsel-projectile company-box all-the-icons-ivy)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
