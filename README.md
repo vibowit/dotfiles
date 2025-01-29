@@ -24,7 +24,7 @@ The setup is designed for macOS and Linux and uses Nix Flakes for reproducibilit
 
 ## Installation
 ```sh
-git clone git@github.com:yourusername/dotfiles.git ~/.dotfiles
+git clone git@github.com:vibowit/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
 ```
