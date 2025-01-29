@@ -5,6 +5,7 @@ The setup is designed for macOS and Linux and uses Nix Flakes for reproducibilit
 
 ## Structure
 
+```md
 ~/.dotfiles
 ├── config
 │   ├── nvim        # Neovim configuration
@@ -20,6 +21,7 @@ The setup is designed for macOS and Linux and uses Nix Flakes for reproducibilit
 │   │   ├── modules/
 ├── install.sh      # Bootstrapping script
 └── README.md
+```
 
 
 ## Installation - automatic
