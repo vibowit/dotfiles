@@ -22,11 +22,16 @@ The setup is designed for macOS and Linux and uses Nix Flakes for reproducibilit
 └── README.md
 
 
-## Installation
+## Installation - automatic
+
 ```sh
 git clone git@github.com:vibowit/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
+
+nix run nixpkgs#gh -- auth login
+nix run nixpkgs#gh -- repo clone vibowit/dotfiles ~/.dotfiles
+nix run home-manager -- switch --flake ~/.dotfiles/nix#vibo-home
 ```
 
 ## Features
@@ -43,7 +48,7 @@ cd ~/.dotfiles
 After modifying configuration files, apply changes with:
 
 ```sh
-home-manager switch --flake ~/.dotfiles
+home-manager switch --flake ~/.dotfiles/nix
 
 ```
 
