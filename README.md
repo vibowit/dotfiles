@@ -1,69 +1,84 @@
-# Dotfiles Repository
+# 🛠 Dotfiles Repository
 
-This repository contains my personal configuration files (dotfiles) for Nix, nix-darwin, Home Manager, Neovim, Zsh, and other tools.
-The setup is designed for macOS and Linux and uses Nix Flakes for reproducibility.
+This repository contains my personal dotfiles managed with Nix Flakes,
+supporting:
 
-## Structure
+- **NixOS**
+- **macOS (nix-darwin)**
+- **Home Manager**
+- **Neovim, Zsh, and other CLI tools**
 
-TODO: not actual. I did some refactoring, and have to update this document
+## 📂 Repository Structure
 
-```md
+```
 ~/.dotfiles
-├── config
-│   ├── nvim        # Neovim configuration
-│   ├── zsh         # Zsh configuration
-│   ├── tmux        # Tmux configuration
-├── nix
-│   ├── flake.nix   # Main Nix flake
-│   ├── home-manager
-│   │   ├── home.nix
-│   │   ├── modules/
-│   ├── nix-darwin
-│   │   ├── darwin-configuration.nix
-│   │   ├── modules/
-├── install.sh      # Bootstrapping script
-└── README.md
+├── flake.nix
+├── flake.lock
+├── nixos/
+│   ├── hosts/
+│   │   ├── host1.nix
+│   │   ├── host2.nix
+│   ├── modules/
+│   │   ├── common.nix
+│   │   ├── hardware-configuration.nix
+├── darwin/
+│   ├── darwin-configuration.nix
+│   ├── modules/
+│   │   ├── common.nix
+├── home-manager/
+│   ├── users/
+│   │   ├── user1.nix
+│   │   ├── user2.nix
+│   ├── modules/
+│   │   ├── zsh.nix
+│   │   ├── nvim.nix
+├── config/
+│   ├── nvim/
+│   ├── zsh/
+│   ├── tmux/
+├── README.md
 ```
 
+## 🚀 Installation & Setup
 
-## Installation - automatic
+### 1️⃣ Clone the Repository
 
 ```sh
-git clone git@github.com:vibowit/dotfiles.git ~/.dotfiles
+git clone https://github.com/vibowit/dotfiles ~/.dotfiles
 cd ~/.dotfiles
-./install.sh
-
-nix run nixpkgs#gh -- auth login
-nix run nixpkgs#gh -- repo clone vibowit/dotfiles ~/.dotfiles
-nix run home-manager -- switch --flake ~/.dotfiles/nix#vibo-home
 ```
 
-## Features
-
-- Modularized Neovim setup
-- Zsh with autosuggestions, syntax highlighting, and starship prompt
-- Tmux configuration
-- Home Manager for easy config management
-- Nix Flakes for reproducibility
-
-
-## Applying Changes
-
-After modifying configuration files, apply changes with:
+### 2️⃣ Apply NixOS Configuration
 
 ```sh
-home-manager switch --flake ~/.dotfiles/nix
-
+sudo nixos-rebuild switch --flake ~/.dotfiles#host1
 ```
 
+### 3️⃣ Apply macOS (nix-darwin) Configuration
 
-## Future Plans
+```sh
+darwin-rebuild switch --flake ~/.dotfiles#macbook
+```
 
-- Add NixOS support
-- Improve automation and setup scripts
-- Fine-tune configurations for better performance
+### 4️⃣ Apply Home Manager Configuration
+
+```sh
+home-manager switch --flake ~/.dotfiles#user1
+```
+
+## 🔧 Features
+
+- **Fully reproducible system configurations** for Linux & macOS
+- **Modular Home Manager setup** for flexible user environments
+- **Preconfigured Neovim, Zsh, and Tmux**
+- **Nix Flakes for improved dependency management**
+- **Easy deployment with a single command**
+
+## 📜 License
+
+This project is licensed under the **MIT License**. Feel free to use and modify
+it as needed!
 
 ---
 
-Feel free to fork and modify as needed!
-
+💻 Maintained by [vibowit](https://github.com/vibowit).
