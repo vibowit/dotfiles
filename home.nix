@@ -1,16 +1,20 @@
-{ config, pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./zsh.nix
-    ./nvim.nix
+    # ./nvim.nix
+    ./nvf.nix
   ];
-
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "vibo";
-  home.homeDirectory = "/home/vibo";
+  home = {
+    username = "vibo";
+    homeDirectory = "/home/vibo";
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -23,15 +27,14 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    # pkgs.cowsay
-    bat
-    fd
-    ripgrep
-    unzip
-    rsync
-    nerd-fonts.meslo-lg
-    nerd-fonts.jetbrains-mono
+  home.packages = [
+    pkgs.bat
+    pkgs.fd
+    pkgs.ripgrep
+    pkgs.unzip
+    pkgs.rsync
+    pkgs.nerd-fonts.meslo-lg
+    pkgs.nerd-fonts.jetbrains-mono
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -39,7 +42,6 @@
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
   ];
-
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -64,22 +66,24 @@
     EDITOR = lib.mkDefault "vim";
   };
 
-  programs.gh = {
-    enable = true;
-    settings = {
-      version = "1";
-      aliases = {
-        "as" = "auth status";
+  programs = {
+    gh = {
+      enable = true;
+      settings = {
+        version = "1";
+        aliases = {
+          "as" = "auth status";
+        };
       };
     };
-  };
 
-  programs.git = {
-    enable = true;
-    extraConfig = {
-      user.name = "vibowit";
-      user.email = "vibowit@gmail.com";
-      init.defaultBranch = "main";
+    git = {
+      enable = true;
+      extraConfig = {
+        user.name = "vibowit";
+        user.email = "vibowit@gmail.com";
+        init.defaultBranch = "main";
+      };
     };
   };
 
