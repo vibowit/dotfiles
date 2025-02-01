@@ -7,6 +7,12 @@
     vimdiffAlias = true;
   };
 
+  home.packages = with pkgs; [
+    # pkgs.cowsay
+    ripgrep
+    gcc
+  ];
+
   home.sessionVariables = {
     EDITOR = "nvim";  # Set Neovim as default editor
   };
