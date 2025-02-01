@@ -80,7 +80,8 @@ _: {
           nvimBufferline.enable = false;
         };
 
-        treesitter.context.enable = true;
+        # show context on top of window
+        treesitter.context.enable = false;
 
         binds = {
           whichKey = {

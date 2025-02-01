@@ -1,7 +1,7 @@
-# 🛠 Dotfiles Repository
+# Dotfiles
 
-This repository contains my personal dotfiles managed with Nix Flakes,
-supporting:
+This repository contains my personal dotfiles managed with Nix Flakes, covering
+configurations for:
 
 - **NixOS**
 - **macOS (nix-darwin)**
@@ -39,6 +39,39 @@ supporting:
 ├── README.md
 ```
 
+## 🛠 Installing Nix
+
+Before setting up the dotfiles, ensure that Nix is installed on your system.
+
+### Install Nix on Linux & macOS
+
+```sh
+curl -L https://nixos.org/nix/install | sh
+```
+
+### Enable Flakes & Experimental Features
+
+Modify `~/.config/nix/nix.conf` (create it if necessary) and add:
+
+```sh
+experimental-features = nix-command flakes
+```
+
+For NixOS, ensure these options are set in `/etc/nixos/configuration.nix`:
+
+```nix
+{ config, pkgs, ... }:
+{
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+}
+```
+
+Then apply the changes:
+
+```sh
+sudo nixos-rebuild switch
+```
+
 ## 🚀 Installation & Setup
 
 ### 1️⃣ Clone the Repository
@@ -66,19 +99,17 @@ darwin-rebuild switch --flake ~/.dotfiles#macbook
 home-manager switch --flake ~/.dotfiles#user1
 ```
 
-## 🔧 Features
+## 🛠 Features
 
-- **Fully reproducible system configurations** for Linux & macOS
-- **Modular Home Manager setup** for flexible user environments
-- **Preconfigured Neovim, Zsh, and Tmux**
-- **Nix Flakes for improved dependency management**
-- **Easy deployment with a single command**
+- **Fully reproducible system configurations** for both Linux & macOS
+- **Modular Home Manager setup** for user environments
+- **Neovim, Zsh, Tmux preconfigured**
+- **Nix Flakes for better dependency management**
 
 ## 📜 License
 
-This project is licensed under the **MIT License**. Feel free to use and modify
-it as needed!
+MIT License. Feel free to use and modify as needed!
 
 ---
 
-💻 Maintained by [vibowit](https://github.com/vibowit).
+Maintained by [vibowit](https://github.com/vibowit).
