@@ -5,6 +5,8 @@ The setup is designed for macOS and Linux and uses Nix Flakes for reproducibilit
 
 ## Structure
 
+TODO: not actual. I did some refactoring, and have to update this document
+
 ```md
 ~/.dotfiles
 ├── config
