@@ -16,14 +16,14 @@
   }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-      lib = nixpkgs.lib;
+    lib = nixpkgs.lib;
   in {
     nixosConfigurations = {
       nixos-base = lib.nixosSystem {
         inherit system;
         modules = [
           ./configuration.nix
-          nvim/flake.nix
+          # nvim/flake.nix
         ];
       };
     };
