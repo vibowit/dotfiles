@@ -8,11 +8,11 @@
     nixvim.url = "github:nix-community/nixvim";
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
+  outputs = { self, nixpkgs, home-manager, nixvim, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {inherit system;};
-      lib = import nixpkgs {inherit lib;};
+      lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
         nixos-base = lib.nixosSystem {
