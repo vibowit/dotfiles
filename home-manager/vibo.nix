@@ -1,12 +1,15 @@
 {
+  configs,
   pkgs,
   lib,
+  nixvim,
   ...
 }: {
   imports = [
+    nixvim.homeManagerModules.nixvim
     ./zsh.nix
-    # ./nvim.nix
-    ./nvf.nix
+    ./nvim.nix
+    # ./nvf.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -35,6 +38,9 @@
     pkgs.rsync
     pkgs.nerd-fonts.meslo-lg
     pkgs.nerd-fonts.jetbrains-mono
+
+    # my magic nvim setup
+    # pkgs.nixvim
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -85,6 +91,7 @@
         init.defaultBranch = "main";
       };
     };
+
   };
 
   # Let Home Manager install and manage itself.
