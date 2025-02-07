@@ -8,11 +8,34 @@
     viAlias = true;
     vimAlias = true;
 
-    # colorschemes.catppuccin.enable = true;
-    colorschemes.tokyonight.enable = true;
+    colorschemes = {
+      # https://nix-community.github.io/nixvim/colorschemes/tokyonight/index.html
+      tokyonight = {
+        enable = true;
+        settings = {
+          # Like many other themes, this one has different styles, and you could load
+          # any other, such as 'storm', 'moon', or 'day'.
+          style = "night";
+        };
+      };
+    };
 
-    globals.mapleader = " ";
-    clipboard.register = "unnamedplus";
+    globals = {
+      mapleader = " ";
+      maplocalleader = " ";
+      have_nerd_font = true;
+    };
+    #  See `:help 'clipboard'`
+    clipboard = {
+      providers = {
+        wl-copy.enable = true; # For Wayland
+        xsel.enable = true; # For X11
+      };
+
+      # Sync clipboard between OS and Neovim
+      #  Remove this option if you want your OS clipboard to remain independent.
+      register = "unnamedplus";
+    };
 
     # Set basic Neovim options
     opts = {
@@ -53,6 +76,23 @@
       web-devicons.enable = true; # Icons in status line
       lsp-format.enable = true;
 
+      nvim-autopairs.enable = true;
+
+      # Detect tabstop and shiftwidth automatically
+      # https://nix-community.github.io/nixvim/plugins/sleuth/index.html
+      sleuth = {
+        enable = true;
+      };
+
+      # Highlight todo, notes, etc in comments
+      # https://nix-community.github.io/nixvim/plugins/todo-comments/index.html
+      todo-comments = {
+        settings = {
+          enable = true;
+          signs = true;
+        };
+      };
+    
       # Syntax highlighting
       treesitter = {
         enable = true; 
@@ -85,6 +125,7 @@
           lua_ls.enable = true;
           pyright.enable = true;
           nil_ls.enable = true;
+          gopls.enable = true;
         };
       };
     };

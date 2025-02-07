@@ -29,8 +29,9 @@
     pkgs.ripgrep
     pkgs.unzip
     pkgs.rsync
-    pkgs.nerd-fonts.meslo-lg
-    pkgs.nerd-fonts.jetbrains-mono
+    #pkgs.nerd-fonts.meslo-lg
+    #pkgs.nerd-fonts.jetbrains-mono
+    pkgs.wl-clipboard
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -87,3 +88,4 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
+
