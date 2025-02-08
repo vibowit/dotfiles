@@ -12,4 +12,10 @@
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
+  virtualisation.docker.enable = true;
+
+  users.users.vibo = {
+    extraGroups = [ "docker" "dialout" ];
+  };
+
 }
