@@ -15,7 +15,7 @@
     useOSProber = true;
   };
 
-  networking.hostName = "nixos-base"; # Define your hostname.
+  # networking.hostName = "nixos-base"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
@@ -75,6 +75,8 @@
       neovim
     ];
 
+    shell = pkgs.zsh;
+
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICixyOYGUARFOro/exsKfowev2fXBGRx0lrCOiUQljnp vibowit@gmail.com"
     ];
@@ -92,7 +94,6 @@
   ];
 
   environment.shells = with pkgs; [zsh bash];
-  users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -141,7 +142,7 @@
   # Enable ssh
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
+    settings.PasswordAuthentication = true;
     settings.KbdInteractiveAuthentication = false;
   };
   programs.ssh.startAgent = true;

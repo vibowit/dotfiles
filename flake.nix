@@ -17,9 +17,12 @@
       nixosConfigurations = {
         nixos-base = lib.nixosSystem {
           inherit system;
-          modules = [
-            ./configuration.nix
-          ];
+          modules = [ ./hosts/base.nix ];
+        };
+
+        marina-nix = lib.nixosSystem {
+          inherit system;
+          modules = [ ./hosts/marina-nix.nix ];
         };
       };
 
