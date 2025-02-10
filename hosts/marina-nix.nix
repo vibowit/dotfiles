@@ -12,7 +12,6 @@
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
-  virtualisation.docker.enable = true;
 
   users.users.vibo = {
     extraGroups = [ "docker" "dialout" ];
@@ -24,6 +23,29 @@
     git
     sudo
     tmux
+
+    # home automation
+    mosquitto
+    mariadb
   ];
+
+ 
+  services.mosquitto = {
+    enable = true;
+    # in case of problems
+    # logType = [ "error" "warning" "notice" "information" "debug" ];
+    listeners = [
+      {
+        address = "0.0.0.0"; # Listen on all interfaces
+        port = 1883;
+        users.mqtt = {
+          acl = [
+            "readwrite #"
+          ];
+          password = "mqtt12345";
+        };
+      }
+    ];
+  };
 
 }
