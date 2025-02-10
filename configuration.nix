@@ -141,7 +141,7 @@
   # Enable ssh
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
+    settings.PasswordAuthentication = true;
     settings.KbdInteractiveAuthentication = false;
   };
   programs.ssh.startAgent = true;

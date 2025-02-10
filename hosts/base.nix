@@ -144,6 +144,7 @@
     enable = true;
     settings.PasswordAuthentication = true;
     settings.KbdInteractiveAuthentication = false;
+    settings.PermitRootLogin = "no";
   };
   programs.ssh.startAgent = true;
 
