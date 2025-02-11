@@ -12,6 +12,11 @@
   networking.defaultGateway = "192.168.1.1";
   networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
+  networking.firewall = {
+    allowedTCPPorts = [8123];  # Home Assistant web interface
+    interfaces.podman0.allowedUDPPorts = [53];  # DNS resolution
+  };
+
 
   users.users.vibo = {
     extraGroups = [ "docker" "dialout" ];
@@ -25,9 +30,52 @@
     tmux
 
     # home automation
-    mosquitto
-    mariadb
+    # mosquitto
+    podman
+    # mariadb
   ];
+
+  services.home-assistant = {
+    enable = true;
+    configDir = "/var/lib/hass";
+    configWritable = true;
+    config = {
+      # defaultConfig = {};
+      homeassistant = {
+        unit_system = "metric";
+        homeassistant.time_zone = "Europe/Warsaw";
+      };
+      recorder.db_url = "mysql://homeassistant:yourpassword@localhost/homeassistant?charset=utf8mb4";
+    };
+    extraComponents = [
+      "esphome"    # Required for device discovery
+      "met"        # Weather integration base
+      "radio_browser"
+    ];
+    extraPackages = python3Packages: [
+      python3Packages.psycopg2
+      python3Packages.mysqlclient
+      python3Packages.numpy
+      python3Packages.gtts
+    ];
+
+  };
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    ensureDatabases = [ "homeassistant" ];
+    ensureUsers = [{
+      name = "homeassistant";
+      ensurePermissions = { "homeassistant.*" = "ALL PRIVILEGES"; };
+    }];
+
+    settings.mysqld = {
+      innodb_buffer_pool_size = "512M";
+      query_cache_type = 1;
+      thread_cache_size = 32;
+    };
+  };
 
  
   services.mosquitto = {
