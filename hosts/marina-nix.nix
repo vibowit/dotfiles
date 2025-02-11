@@ -28,72 +28,36 @@
     git
     sudo
     tmux
-
-    # home automation
-    # mosquitto
-    podman
-    # mariadb
   ];
 
-  services.home-assistant = {
-    enable = true;
-    configDir = "/var/lib/hass";
-    configWritable = true;
-    config = {
-      # defaultConfig = {};
-      homeassistant = {
-        unit_system = "metric";
-        homeassistant.time_zone = "Europe/Warsaw";
-      };
-      recorder.db_url = "mysql://homeassistant:yourpassword@localhost/homeassistant?charset=utf8mb4";
+
+  # enable podman and it's nixos module
+  virtualisation.podman.enable = true;
+  virtualisation.oci-containers.backend = "podman";
+
+  # define the mosquitto container
+  virtualisation.oci-containers.containers.mosquitto = {
+    image = "eclipse-mosquitto:2";
+    volumes = [
+      "/srv/homelab/mosquitto/config/passwd:/mosquitto/config/passwd"
+      "${pkgs.writeText "mosquitto.conf" ''
+        listener 1883
+        allow_anonymous false
+        password_file /mosquitto/config/passwd
+      ''}:/mosquitto/config/mosquitto.conf"
+    ];
+    ports = ["1883:1883"]; # MQTT port
+    environment = {
+      TZ = "Europe/Warsaw";
     };
-    extraComponents = [
-      "esphome"    # Required for device discovery
-      "met"        # Weather integration base
-      "radio_browser"
-    ];
-    extraPackages = python3Packages: [
-      python3Packages.psycopg2
-      python3Packages.mysqlclient
-      python3Packages.numpy
-      python3Packages.gtts
-    ];
-
+    autoStart = true;
+    extraOptions = [ "--log-driver=journald" ];
   };
 
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-    ensureDatabases = [ "homeassistant" ];
-    ensureUsers = [{
-      name = "homeassistant";
-      ensurePermissions = { "homeassistant.*" = "ALL PRIVILEGES"; };
-    }];
-
-    settings.mysqld = {
-      innodb_buffer_pool_size = "512M";
-      query_cache_type = 1;
-      thread_cache_size = 32;
-    };
-  };
-
- 
-  services.mosquitto = {
-    enable = true;
-    # in case of problems
-    # logType = [ "error" "warning" "notice" "information" "debug" ];
-    listeners = [
-      {
-        address = "0.0.0.0"; # Listen on all interfaces
-        port = 1883;
-        users.mqtt = {
-          acl = [
-            "readwrite #"
-          ];
-          password = "mqtt12345";
-        };
-      }
-    ];
-  };
+  # ensure the persistent directory exists
+  systemd.tmpfiles.rules = [
+    "d /srv/homelab/mosquitto/config 0755 root root -"
+    "d /srv/homelab/mosquitto/data 0755 root root -"
+  ];
 
 }
