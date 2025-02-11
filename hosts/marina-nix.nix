@@ -39,12 +39,13 @@
   virtualisation.oci-containers.containers.mosquitto = {
     image = "eclipse-mosquitto:2";
     volumes = [
-      "/srv/homelab/mosquitto/config/passwd:/mosquitto/config/passwd"
-      "${pkgs.writeText "mosquitto.conf" ''
-        listener 1883
-        allow_anonymous false
-        password_file /mosquitto/config/passwd
-      ''}:/mosquitto/config/mosquitto.conf"
+      "/srv/homelab/mosquitto/config:/mosquitto/config"
+      "/srv/homelab/mosquitto/data:/mosquitto/data"
+      # "${pkgs.writeText "mosquitto.conf" ''
+      #   listener 1883
+      #   allow_anonymous false
+      #   password_file /mosquitto/config/passwd
+      # ''}:/mosquitto/config/mosquitto.conf"
     ];
     ports = ["1883:1883"]; # MQTT port
     environment = {
