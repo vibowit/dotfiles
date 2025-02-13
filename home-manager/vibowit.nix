@@ -1,4 +1,7 @@
-{ configs, pkgs, lib, nixvim, ... }: {
+{ config, pkgs, lib, nixvim, ... }:
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+in {
   imports = [
     nixvim.homeManagerModules.nixvim
     ./zsh.nix
@@ -8,8 +11,9 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home = {
-    username = "vibo";
-    homeDirectory = "/home/vibo";
+    username = "vibowit";
+    #homeDirectory = "/home/vibowit";
+    homeDirectory = (if isDarwin then "/Users/vibowit" else "/home/vibowit");
   };
 
   # This value determines the Home Manager release that your configuration is

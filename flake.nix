@@ -10,7 +10,9 @@
 
   outputs = { self, nixpkgs, home-manager, nixvim, ... }@inputs:
     let
-      system = "x86_64-linux";
+      #system = "x86_64-linux";
+      isDarwin = pkgs.stdenv.isDarwin;
+      system = (if isDarwin then "aarch64-darwin" else "x86_64-linux");
       pkgs = import nixpkgs {inherit system;};
       lib = nixpkgs.lib;
     in {
@@ -27,11 +29,11 @@
       };
 
       homeConfigurations = {
-        vibo = home-manager.lib.homeManagerConfiguration {
+        vibowit = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {inherit nixvim;};
           modules = [
-            ./home-manager/vibo.nix
+            ./home-manager/vibowit.nix
           ];
         };
       };

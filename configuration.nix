@@ -67,7 +67,7 @@
   #   ];
   # };
 
-  users.users.vibo = {
+  users.users.vibowit = {
     isNormalUser = true;
     extraGroups = ["networkmanager" "wheel"]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
