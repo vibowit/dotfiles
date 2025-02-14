@@ -12,34 +12,32 @@
   outputs = { self, nixpkgs, home-manager, nixvim, ... }:
     let
       lib = nixpkgs.lib;
-      # system = "aarch64-darwin";  # Fallback to Linux if not explicitly set
-      # system = builtins.trace "Detected system: ${builtins.currentSystem}" builtins.currentSystem;
-      # system = builtins.currentSystem;  # Fallback to Linux if not explicitly set
-      system = builtins.currentSystem;
-      pkgs = import nixpkgs {inherit system;};
-      # system = (if isDarwin then "aarch64-darwin" else "x86_64-linux");
     in {
       nixosConfigurations = {
         nixos-base = lib.nixosSystem {
-          inherit system pkgs;
-          modules = [ ./hosts/base.nix ];
+          system = "x86_64-linux";
+          modules = [ 
+            ./hosts/base.nix
+            ({ config, pkgs, ...}: {
+              nixpkgs.pkgs = nixpkgs.legacyPackages.${config.nixpkgs.system};
+            })
+          ];
         };
 
         marina-nix = lib.nixosSystem {
-          inherit system;
+          system = "x86_64-linux";
           modules = [ ./hosts/marina-nix.nix ];
         };
       };
 
-      homeConfigurations = {
-        vibowit = home-manager.lib.homeManagerConfiguration {
-          # inherit system;
-          inherit pkgs;
-          extraSpecialArgs = {inherit nixvim;};
-          modules = [
-            ./home-manager/vibowit.nix
-          ];
-        };
+      homeConfigurations.vibowit = home-manager.lib.homeManagerConfiguration {
+        # system = "aarch64-darwin";
+        pkgs = import nixpkgs {};
+        # inherit system;
+        extraSpecialArgs = {inherit nixvim;};
+        modules = [
+          ./home-manager/vibowit.nix
+        ];
       };
     };
 }

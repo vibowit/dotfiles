@@ -10,6 +10,15 @@
     viAlias = true;
     vimAlias = true;
 
+    extraConfigLua = ''
+      vim.cmd [[
+        highlight Normal guibg=none
+        highlight NonText guibg=none
+        highlight Normal ctermbg=none
+        highlight NonText ctermbg=none
+      ]]
+    '';
+
     colorschemes = {
       # https://nix-community.github.io/nixvim/colorschemes/tokyonight/index.html
       tokyonight = {
