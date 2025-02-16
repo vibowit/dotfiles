@@ -1,5 +1,5 @@
 {
-  description = "My NixOS and Homw-Manager Flake";
+  description = "My NixOS, MacBook and Home-Manager Flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -7,37 +7,33 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, ... }:
+  outputs = { self, nixpkgs, home-manager, nixvim, flake-utils, ... }@inputs:
     let
-      lib = nixpkgs.lib;
-    in {
-      nixosConfigurations = {
-        nixos-base = lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ 
-            ./hosts/base.nix
-            ({ config, pkgs, ...}: {
-              nixpkgs.pkgs = nixpkgs.legacyPackages.${config.nixpkgs.system};
-            })
-          ];
-        };
-
-        marina-nix = lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./hosts/marina-nix.nix ];
-        };
-      };
-
+      supportedSystems = [ "aarch64-darwin" "x86_64-linux" ];
+      forEachSystem = flake-utils.lib.eachSystem supportedSystems;
+    in
+    {
+      # Define Home Manager configurations globally
       homeConfigurations.vibowit = home-manager.lib.homeManagerConfiguration {
-        # system = "aarch64-darwin";
-        pkgs = import nixpkgs {};
-        # inherit system;
-        extraSpecialArgs = {inherit nixvim;};
-        modules = [
-          ./home-manager/vibowit.nix
-        ];
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin"; # or dynamically detect
+          config.allowUnfree = true;
+        };
+        modules = [ ./home/default.nix ];
+        extraSpecialArgs = { inherit nixvim; };
       };
+
+      # Define system-dependent outputs
+      devShells = forEachSystem (system: {
+        default = import ./shell/default.nix {
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        };
+      });
     };
 }
