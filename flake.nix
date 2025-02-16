@@ -17,13 +17,16 @@
     in
     {
       # Define Home Manager configurations globally
-      homeConfigurations.vibowit = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "aarch64-darwin"; # or dynamically detect
-          config.allowUnfree = true;
+      homeConfigurations = {
+        vibowit = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin"; # or dynamically detect
+            config.allowUnfree = true;
+          };
+
+          modules = [ ./home/default.nix ];
+          extraSpecialArgs = { inherit nixvim; };
         };
-        modules = [ ./home/default.nix ];
-        extraSpecialArgs = { inherit nixvim; };
       };
 
       # Define system-dependent outputs

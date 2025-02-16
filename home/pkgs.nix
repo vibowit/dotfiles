@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    # Core development
     go_1_22
     gopls
     golangci-lint
@@ -11,9 +12,8 @@
     python3Packages.pip
     python3Packages.virtualenv
     poetry
-    wezterm
-    starship
-    zsh
+
+    # Terminal & CLI tools
     gh
     jq
     curl
@@ -22,9 +22,12 @@
     fzf
     direnv
     nix-direnv
+
+    # Formatters & Linters
     nodePackages.prettier
     python3Packages.black
     python3Packages.flake8
     pre-commit
+
   ];
 }

@@ -1,7 +1,6 @@
 { pkgs, nixvim, ... }:
 
 {
-
   programs.nixvim = {
     # inherit pkgs;
 

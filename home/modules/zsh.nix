@@ -10,10 +10,13 @@
       checkout = "git checkout";
       commit = "git commit -m";
       gst = "git status";
+      g = "git";
+      hm = "home-manager";
       l = "eza --icons=always";
       la = "eza --icons=always -lah";
       ll = "eza --icons=always -lh";
       ls = "eza --icons=always -l";
+      nv = "nvim";
       push = "git push";
       status = "git status";
     };
